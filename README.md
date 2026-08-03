@@ -24,8 +24,8 @@ Ce dépôt évoluera au fil des missions et des projets réalisés.
 | Jour | Sujet | Statut |
 |------|--------|--------|
 | 1 | Python - Variables, listes, dictionnaires, fonctions | ✅ |
-| 2 | À venir | ⏳ |
-| 3 | À venir | ⏳ |
+| 2 | Python - Filtrage, validation et réutilisation des fonctions | ✅ |
+| 3 | Python - JSON, chargement et filtrage des données de test | ✅ |
 
 ---
 

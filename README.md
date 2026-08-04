@@ -1,40 +1,51 @@
 # 🚀 QA Automation Learning Journey
 
-Bienvenue sur mon parcours d'apprentissage en QA Automation.
-
-L'objectif de ce projet est de documenter ma progression pendant 90 jours afin de développer mes compétences en Python, Playwright, les tests API et les bonnes pratiques d'automatisation.
-
-Ce dépôt évoluera au fil des missions et des projets réalisés.
+> A 90-day hands-on journey to become a QA Automation Engineer using Python, Pytest, Playwright and modern testing practices.
 
 ---
 
-## 🎯 Objectifs
+## 🎯 Project Goal
 
-- Développer mes compétences en Python
-- Construire un framework d'automatisation avec Playwright
-- Automatiser des tests Web et API
-- Apprendre Git et GitHub
-- Mettre en place une CI/CD avec GitHub Actions
-- Adopter les bonnes pratiques de développement et de QA
+This repository documents my progression from manual QA to QA Automation.
 
----
+Rather than following isolated tutorials, I am building a real automation framework step by step while learning the concepts used in professional QA teams.
 
-## 🗓️ Progression
-
-| Jour | Sujet | Statut |
-|------|--------|--------|
-| 1 | Python - Variables, listes, dictionnaires, fonctions | ✅ |
-| 2 | À venir | ⏳ |
-| 3 | À venir | ⏳ |
+The objective is to understand not only **how** to automate tests, but also **why** frameworks are designed this way.
 
 ---
 
-## 📁 Structure du projet
+## 🛠️ Tech Stack
+
+Current
+
+- Python
+- JSON
+- Git
+- GitHub
+
+Coming soon
+
+- Pytest
+- Playwright
+- API Testing
+- GitHub Actions
+- Page Object Model
+- Fixtures
+- CI/CD
+
+---
+
+## 📂 Repository Structure
 
 ```text
 qa-automation-learning/
 
 ├── day01/
+│   └── exercises.py
+├── day02/
+│   └── exercises.py
+[...]
+├── day30/
 │   └── exercises.py
 │
 ├── README.md
@@ -42,54 +53,37 @@ qa-automation-learning/
 └── .gitignore
 ```
 
-Cette structure évoluera au fil du projet.
+⚠️ This temporary structure will evolve into a real automation framework during the learning journey.
 
 ---
 
-## 🛠️ Technologies
+## 📈 Progress
 
-- Python
-- Git
-- GitHub
+| Day | Topic | Status |
+|-----|-------|--------|
+| 1 | Python fundamentals | ✅ |
+| 2 | Functions & filtering | ✅ |
+| 3 | JSON & test data | ✅ |
+| 4 | Modules & project architecture | ✅ |
+| 5 | [...] | ⏳ |
 
-À venir :
+---
 
-- Playwright
+## 🎯 Final Goal
+
+By the end of this journey, this repository will contain:
+
+- UI Automation with Playwright
+- API Testing
 - Pytest
-- Requests
+- Page Object Model
+- Fixtures
+- Reporting
 - GitHub Actions
+- Professional project structure
 
 ---
 
-## 📚 Ce que j'apprends
+## 👨‍💻 About
 
-Chaque journée contient :
-
-- une notion théorique
-- plusieurs exercices Python
-- une mission orientée QA
-- une revue de code
-- un défi bonus
-
-L'objectif est de construire progressivement un framework d'automatisation complet.
-
----
-
-## 📈 Mon évolution
-
-Ce dépôt représente mon apprentissage.
-
-Je privilégie :
-
-- la qualité du code
-- la compréhension des concepts
-- les bonnes pratiques
-- la progression continue
-
-Chaque commit correspond à une étape de mon parcours.
-
----
-
-## 👨‍💻 Auteur
-
-Projet réalisé dans le cadre de mon apprentissage en QA Automation.
+This project is part of my journey to become a QA Automation Engineer.

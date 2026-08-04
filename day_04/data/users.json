@@ -1,0 +1,32 @@
+[
+    {
+        "username": "standard_user",
+        "password": "secret_sauce",
+        "role": "customer",
+        "locked": false
+    },
+    {
+        "username": "locked_user",
+        "password": "secret_sauce",
+        "role": "customer",
+        "locked": true
+    },
+    {
+        "username": "admin_user",
+        "password": "admin123",
+        "role": "admin",
+        "locked": false
+    },
+    {
+        "username": "problem_user",
+        "password": "secret_sauce",
+        "role": "customer",
+        "locked": false
+    },
+    {
+        "username": "test123",
+        "password": "",
+        "role": "customer",
+        "locked": false
+    }
+]

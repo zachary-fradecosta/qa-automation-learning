@@ -69,22 +69,6 @@ qa-automation-learning/
 
 ---
 
-## 📓 Learning Journal
-
-### Day 1
-
-...
-
-### Day 2
-
-...
-
-### Day 3
-
-...
-
----
-
 ## 🎯 Final Goal
 
 By the end of this journey, this repository will contain:

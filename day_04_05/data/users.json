@@ -22,11 +22,5 @@
         "password": "secret_sauce",
         "role": "customer",
         "locked": false
-    },
-    {
-        "username": "test123",
-        "password": "",
-        "role": "customer",
-        "locked": false
     }
 ]

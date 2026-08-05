@@ -65,7 +65,8 @@ qa-automation-learning/
 | 2 | Functions & filtering | ✅ |
 | 3 | JSON & test data | ✅ |
 | 4 | Modules & project architecture | ✅ |
-| 5 | [...] | ⏳ |
+| 5 | Python assertions and first unit tests | ✅ |
+| 6 | [...] | ⏳ |
 
 ---
 

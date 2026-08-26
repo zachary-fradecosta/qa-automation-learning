@@ -1,16 +1,14 @@
-from unittest import result
+import pytest
 
 from utils.user_helpers import count_users, get_active_users, find_user, is_valid_user
-from utils.json_loader import load_users
+    
 
-def test_count_users():
-    users = load_users("data/users.json")
+def test_count_users(users):
     count = count_users(users)
     assert count == 4
 
 
-def test_get_active_users():
-    users = load_users("data/users.json")
+def test_get_active_users(users):
     active_users = get_active_users(users)
     assert len(active_users) == 3
 
@@ -18,39 +16,24 @@ def test_get_active_users():
     assert "locked_user" not in usernames
 
 
-def test_find_existing_user():
-    users = load_users("data/users.json")
+def test_find_existing_user(users):
     user = find_user(users, "admin_user")
     assert user is not None
     assert user["username"] == "admin_user"
 
 
-def test_find_unknown_user():
-    users = load_users("data/users.json")
+def test_find_unknown_user(users):
     user = find_user(users, "unknown_user")
     assert user is None
 
-#Exercice 4: 
-def test_is_valid_user():
-    user = {
-        "username": "standard_user",
-        "password": "secret_sauce"
-    }
-    result = is_valid_user(user)
-    assert result is True
 
-def test_user_without_username():
-    user = {
-        "username": "",
-        "password": "secret_sauce"
-    }
-    result = is_valid_user(user)
-    assert result is False
-
-def test_user_without_password():
-    user = {
-        "username": "standard_user",
-        "password": ""
-    }
-    result = is_valid_user(user)
-    assert result is False
+@pytest.mark.parametrize(
+    "username, password, expected",
+    [
+        ("standard_user", "secret_sauce", True),
+        ("", "secret_sauce", False),
+        ("standard_user", "", False)
+    ],
+)
+def test_is_valid_user(username, password, expected):
+    assert is_valid_user({"username": username, "password": password}) is expected

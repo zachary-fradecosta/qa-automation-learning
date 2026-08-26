@@ -66,7 +66,8 @@ qa-automation-learning/
 | 3 | JSON & test data | ✅ |
 | 4 | Modules & project architecture | ✅ |
 | 5 | Python assertions and first unit tests | ✅ |
-| 6 | [...] | ⏳ |
+| 6 | Pytest - fixtures, conftest and parametrized tests | ✅ |
+| 7 | [...] | ⏳ |
 
 ---
 

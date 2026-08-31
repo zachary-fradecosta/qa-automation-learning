@@ -1,6 +1,6 @@
 import pytest
 
-from utils.user_helpers import count_users, get_active_users, find_user, is_valid_user
+from utils.user_helpers import count_users, get_active_users, find_user, is_valid_user, get_eligible_users
     
 
 def test_count_users(users):
@@ -37,3 +37,23 @@ def test_find_unknown_user(users):
 )
 def test_is_valid_user(username, password, expected):
     assert is_valid_user({"username": username, "password": password}) is expected
+
+def test_valid_user():
+    user = {"username": "valid_user", "password": "valid_password"}
+    assert is_valid_user(user) is True
+
+def test_user_without_username():
+    user =  {"username": "", "password": "valid_password"}
+    assert is_valid_user(user) is False
+
+def test_user_without_password():
+    user = {"username": "valid_user", "password": ""}
+    assert is_valid_user(user) is False
+
+def test_get_eligible_users(users):
+    eligible_users = get_eligible_users(users)
+    assert len(eligible_users) == 2
+
+    usernames = [user["username"] for user in eligible_users]
+    assert "standard_user" in usernames
+    assert "problem_user" in usernames

@@ -20,12 +20,12 @@ Current
 
 - Python
 - JSON
+- Pytest
 - Git
 - GitHub
 
 Coming soon
 
-- Pytest
 - Playwright
 - API Testing
 - GitHub Actions
@@ -67,7 +67,8 @@ qa-automation-learning/
 | 4 | Modules & project architecture | ✅ |
 | 5 | Python assertions and first unit tests | ✅ |
 | 6 | Pytest - fixtures, conftest and parametrized tests | ✅ |
-| 7 | [...] | ⏳ |
+| 7 | Pytest fundamentals and automated test execution | ✅ |
+| 8 | [...] | ⏳ |
 
 ---
 

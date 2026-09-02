@@ -36,19 +36,14 @@ def test_find_unknown_user(users):
     ],
 )
 def test_is_valid_user(username, password, expected):
-    assert is_valid_user({"username": username, "password": password}) is expected
+    user = {
+        "username": username, 
+        "password": password
+    }
 
-def test_valid_user():
-    user = {"username": "valid_user", "password": "valid_password"}
-    assert is_valid_user(user) is True
+    result = is_valid_user(user)
+    assert result is expected
 
-def test_user_without_username():
-    user =  {"username": "", "password": "valid_password"}
-    assert is_valid_user(user) is False
-
-def test_user_without_password():
-    user = {"username": "valid_user", "password": ""}
-    assert is_valid_user(user) is False
 
 def test_get_eligible_users(users):
     eligible_users = get_eligible_users(users)

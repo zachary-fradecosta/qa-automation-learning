@@ -69,7 +69,8 @@ qa-automation-learning/
 | 6 | Pytest - fixtures, conftest and parametrized tests | ✅ |
 | 7 | Pytest fundamentals and automated test execution | ✅ |
 | 8 | Pytest fixtures and parametrization | ✅ |
-| 9 | [...] | ⏳ |
+| 9 | Pytest markers and test suite selection | ✅ |
+| 10 | [...] | ⏳ |
 
 ---
 

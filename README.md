@@ -68,7 +68,8 @@ qa-automation-learning/
 | 5 | Python assertions and first unit tests | ✅ |
 | 6 | Pytest - fixtures, conftest and parametrized tests | ✅ |
 | 7 | Pytest fundamentals and automated test execution | ✅ |
-| 8 | [...] | ⏳ |
+| 8 | Pytest fixtures and parametrization | ✅ |
+| 9 | [...] | ⏳ |
 
 ---
 

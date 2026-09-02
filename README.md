@@ -70,7 +70,8 @@ qa-automation-learning/
 | 7 | Pytest fundamentals and automated test execution | ✅ |
 | 8 | Pytest fixtures and parametrization | ✅ |
 | 9 | Pytest markers and test suite selection | ✅ |
-| 10 | [...] | ⏳ |
+| 10 | Robust assertions and business rule validation | ✅ |
+| 11 | [...] | ⏳ |
 
 ---
 

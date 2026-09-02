@@ -15,6 +15,8 @@ def test_get_active_users(users):
     usernames = [user["username"] for user in active_users]
     assert "locked_user" not in usernames
 
+    assert all(not user["locked"] for user in active_users), "A locked user should never be returned as active"
+
 @pytest.mark.regression
 def test_find_existing_user(users):
     user = find_user(users, "admin_user")
@@ -52,3 +54,8 @@ def test_get_eligible_users(users):
     usernames = [user["username"] for user in eligible_users]
     assert "standard_user" in usernames
     assert "problem_user" in usernames
+
+    assert all(user["role"] == "customer" for user in eligible_users), "Only customers should be eligible"
+    assert all(is_valid_user(user) for user in eligible_users), "Eligible users must have valid credentials"
+
+    

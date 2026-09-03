@@ -90,7 +90,8 @@ qa-automation-learning/
 | 8 | Pytest fixtures and parametrization | ✅ |
 | 9 | Pytest markers and test suite selection | ✅ |
 | 10 | Robust assertions and business rule validation | ✅ |
-| 11 | [...] | ⏳ |
+| 11 | Negative scenarios and edge cases | ✅ |
+| 12 | [...] | ⏳ |
 
 ---
 
@@ -278,3 +279,18 @@ Markers organize a test suite according to testing goals. They allow critical sm
 #### Key takeaway
 
 A robust test verifies business behavior rather than duplicating the implementation. Multiple assertions are appropriate when they validate different aspects of one behavior.
+
+---
+
+### Day 11 — Negative Scenarios and Edge Cases
+
+#### What I learned
+
+- Created tests for situations where no result is expected.
+- Tested an empty user list.
+- Verified that no eligible users are returned when all users fail the eligibility rules.
+- Used local test data for test-specific scenarios.
+
+#### Key takeaway
+
+Negative tests verify that the application handles invalid, empty or non-matching data correctly. They are essential for preventing regressions in edge cases.

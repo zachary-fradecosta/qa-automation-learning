@@ -58,4 +58,30 @@ def test_get_eligible_users(users):
     assert all(user["role"] == "customer" for user in eligible_users), "Only customers should be eligible"
     assert all(is_valid_user(user) for user in eligible_users), "Eligible users must have valid credentials"
 
-    
+
+@pytest.mark.regression
+def test_get_eligible_users_returns_empty_list_when_no_user_is_eligible():
+    users = [
+        {
+            "username": "customer_user", 
+            "password": "secret_sauce",
+            "role": "customer",
+            "locked": True
+        },
+        {
+            "username": "admin_user", 
+            "password": "secret_sauce",
+            "role": "admin",
+            "locked": False
+        }
+    ]
+
+    eligible_users = get_eligible_users(users)
+    assert eligible_users == []
+
+@pytest.mark.regression
+def test_find_user_returns_none_for_empty_user_list():
+    users = []
+
+    find_users = find_user(users, "test")
+    assert find_users is None

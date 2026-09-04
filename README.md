@@ -26,11 +26,11 @@ Current
 - Pytest Markers
 - Git
 - GitHub
+- API Testing
 
 Coming soon
 
 - Playwright
-- API Testing
 - GitHub Actions
 - Page Object Model
 - CI/CD
@@ -92,7 +92,8 @@ qa-automation-learning/
 | 10 | Robust assertions and business rule validation | ✅ |
 | 11 | Negative scenarios and edge cases | ✅ |
 | 12 | Test data factories with Pytest fixtures | ✅ |
-| 13 | [...] | ⏳ |
+| 13 | API testing fundamentals with Requests | ✅ |
+| 14 | [...] | ⏳ |
 
 ---
 
@@ -311,5 +312,22 @@ Negative tests verify that the application handles invalid, empty or non-matchin
 #### Key takeaway
 
 A factory fixture creates flexible and readable test data. It is useful when several scenarios need similar objects with different values.
+
+---
+
+### Day 13 — API Testing Fundamentals
+
+#### What I learned
+
+- Installed and used the `requests` library.
+- Sent a `GET` request to a public API endpoint.
+- Read HTTP status codes.
+- Converted an API JSON response into a Python dictionary.
+- Created a first API test with Pytest.
+- Configured Python to use system certificates for HTTPS requests.
+
+#### Key takeaway
+
+API testing verifies the contract between a client and a service. A reliable API test checks the HTTP response and the expected JSON data.
 
 ---

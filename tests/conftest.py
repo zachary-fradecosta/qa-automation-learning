@@ -1,6 +1,8 @@
 import pytest
-
 from utils.json_loader import load_users
+
+import truststore
+truststore.inject_into_ssl()
 
 
 @pytest.fixture

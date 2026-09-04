@@ -91,7 +91,8 @@ qa-automation-learning/
 | 9 | Pytest markers and test suite selection | ✅ |
 | 10 | Robust assertions and business rule validation | ✅ |
 | 11 | Negative scenarios and edge cases | ✅ |
-| 12 | [...] | ⏳ |
+| 12 | Test data factories with Pytest fixtures | ✅ |
+| 13 | [...] | ⏳ |
 
 ---
 
@@ -294,3 +295,21 @@ A robust test verifies business behavior rather than duplicating the implementat
 #### Key takeaway
 
 Negative tests verify that the application handles invalid, empty or non-matching data correctly. They are essential for preventing regressions in edge cases.
+
+---
+
+### Day 12 — Test Data Factories
+
+#### What I learned
+
+- Created a reusable `user_factory` fixture.
+- Generated custom user data directly inside a test.
+- Used a factory fixture to avoid repeating user dictionary structures.
+- Distinguished fixed JSON data from flexible test-specific data.
+- Learned that Pytest only discovers fixtures after the fixture file is saved.
+
+#### Key takeaway
+
+A factory fixture creates flexible and readable test data. It is useful when several scenarios need similar objects with different values.
+
+---

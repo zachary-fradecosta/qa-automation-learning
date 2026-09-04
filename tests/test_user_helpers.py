@@ -60,20 +60,10 @@ def test_get_eligible_users(users):
 
 
 @pytest.mark.regression
-def test_get_eligible_users_returns_empty_list_when_no_user_is_eligible():
+def test_get_eligible_users_returns_empty_list_when_no_user_is_eligible(user_factory):
     users = [
-        {
-            "username": "customer_user", 
-            "password": "secret_sauce",
-            "role": "customer",
-            "locked": True
-        },
-        {
-            "username": "admin_user", 
-            "password": "secret_sauce",
-            "role": "admin",
-            "locked": False
-        }
+        user_factory("customer_user", "secret_sauce", "customer", True),
+        user_factory("admin_user", "secret_sauce", "admin", False)
     ]
 
     eligible_users = get_eligible_users(users)

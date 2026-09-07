@@ -106,3 +106,32 @@ assert len(data) > 0
 required_fields = {"id", "name", "email"}
 assert all(required_fields.issubset(user) for user in data)
 ```
+
+
+## POST request example
+
+Run the demonstration script:
+
+```powershell
+python scripts/api_post_demo.py
+```
+
+Create a post:
+
+```python
+payload = {
+    "title": "My first API post",
+    "body": "Created during QA Automation learning",
+    "userId": 1,
+}
+
+response = requests.post(url, json=payload, timeout=10)
+
+assert response.status_code == 201
+
+data = response.json()
+assert data["title"] == payload["title"]
+assert data["body"] == payload["body"]
+assert data["userId"] == payload["userId"]
+assert isinstance(data["id"], int)
+```

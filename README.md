@@ -95,7 +95,8 @@ qa-automation-learning/
 | 13 | API testing fundamentals with Requests | ✅ |
 | 14 | API error responses and API markers | ✅ |
 | 15 | API response payload validation | ✅ |
-| 16 | [...] | ⏳ |
+| 16 | API POST requests and resource creation | ✅ |
+| 17 | [...] | ⏳ |
 
 ---
 

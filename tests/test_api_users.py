@@ -1,6 +1,5 @@
 import requests
 import pytest
-import truststore
 
 @pytest.mark.regression
 @pytest.mark.api

@@ -242,3 +242,20 @@ An HTTP error response can be an expected API behavior. A test should validate t
 A successful HTTP status code is not enough. API tests should also verify the structure, required fields and data types defined by the API contract.
 
 ---
+
+### Day 16 — API POST Requests
+
+#### What I learned
+
+- Used `POST` to send JSON data to an API.
+- Created a request payload with `title`, `body` and `userId`.
+- Verified the `201 Created` response status.
+- Checked that the API response contains the submitted data.
+- Verified that the API creates an integer identifier.
+- Understood the difference between a simulated creation and persistent data creation.
+
+#### Key takeaway
+
+A POST API test validates both the creation status and the response contract. The returned payload should contain the expected submitted values and a created resource identifier.
+
+---

@@ -226,3 +226,19 @@ API testing verifies the contract between a client and a service. A reliable API
 An HTTP error response can be an expected API behavior. A test should validate the response code defined by the API contract, such as `404` for a resource that does not exist.
 
 ---
+
+### Day 15 — API Response Payload Validation
+
+#### What I learned
+
+- Verified that an API response returns the expected Python type.
+- Checked mandatory fields in a JSON response.
+- Validated field types such as `int` and `str`.
+- Tested a list endpoint and verified the contract of every returned user.
+- Distinguished fixed data expectations from rules that may evolve.
+
+#### Key takeaway
+
+A successful HTTP status code is not enough. API tests should also verify the structure, required fields and data types defined by the API contract.
+
+---

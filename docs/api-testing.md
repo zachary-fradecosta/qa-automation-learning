@@ -81,3 +81,28 @@ import requests
 ```
 
 Do not use `verify=False` in professional test code because it disables HTTPS certificate verification.
+
+
+## Response payload validation
+
+```python
+data = response.json()
+
+assert isinstance(data, dict)
+
+required_fields = {"id", "name", "email"}
+assert required_fields.issubset(data)
+
+assert isinstance(data["id"], int)
+assert isinstance(data["name"], str)
+```
+
+For a list response:
+
+```python
+assert isinstance(data, list)
+assert len(data) > 0
+
+required_fields = {"id", "name", "email"}
+assert all(required_fields.issubset(user) for user in data)
+```

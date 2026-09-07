@@ -49,6 +49,11 @@ pytest -m smoke -v
 ```powershell
 pytest -m regression -v
 ```
+## Run API tests
+
+```powershell
+pytest -m api -v
+```
 
 ## Combine markers
 

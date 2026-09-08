@@ -259,3 +259,19 @@ A successful HTTP status code is not enough. API tests should also verify the st
 A POST API test validates both the creation status and the response contract. The returned payload should contain the expected submitted values and a created resource identifier.
 
 ---
+
+### Day 17 — API PUT and PATCH Requests
+
+#### What I learned
+
+- Used `PUT` to replace a complete API resource.
+- Used `PATCH` to update only one field of a resource.
+- Verified `200 OK` responses for update requests.
+- Tested that an updated response contains the expected payload values.
+- Understood why a partial update should use `PATCH` instead of an incomplete `PUT` request.
+
+#### Key takeaway
+
+PUT represents a full replacement of a resource, while PATCH updates only selected fields. Choosing the correct HTTP method protects data from unintended changes.
+
+---

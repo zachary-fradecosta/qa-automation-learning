@@ -96,7 +96,8 @@ qa-automation-learning/
 | 14 | API error responses and API markers | ✅ |
 | 15 | API response payload validation | ✅ |
 | 16 | API POST requests and resource creation | ✅ |
-| 17 | [...] | ⏳ |
+| 17 | API PUT and PATCH requests | ✅ |
+| 18 | [...] | ⏳ |
 
 ---
 

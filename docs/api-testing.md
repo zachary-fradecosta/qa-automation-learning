@@ -107,7 +107,6 @@ required_fields = {"id", "name", "email"}
 assert all(required_fields.issubset(user) for user in data)
 ```
 
-
 ## POST request example
 
 Run the demonstration script:
@@ -134,4 +133,32 @@ assert data["title"] == payload["title"]
 assert data["body"] == payload["body"]
 assert data["userId"] == payload["userId"]
 assert isinstance(data["id"], int)
+```
+
+## PUT request example
+
+```powershell
+python scripts/api_put_demo.py
+```
+
+```python
+response = requests.put(url, json=payload, timeout=10)
+
+assert response.status_code == 200
+```
+
+## PATCH request example
+
+```python
+payload = {
+    "title": "Updated API post",
+}
+
+response = requests.patch(url, json=payload, timeout=10)
+
+assert response.status_code == 200
+
+data = response.json()
+assert data["title"] == payload["title"]
+assert data["id"] == 1
 ```

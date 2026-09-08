@@ -51,3 +51,16 @@ def test_update_post_title_returns_partial_update():
     assert data["id"] == 1
     assert data["title"] == payload["title"]
     assert "body" in data
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_delete_post_returns_success():
+    url = "https://jsonplaceholder.typicode.com/posts/1"
+
+    response = requests.delete(url, timeout=10)
+    assert response.status_code == 200, "Expected HTTP 200 after deleting the post"
+
+    data = response.json()
+    assert isinstance(data, dict)
+    assert data == {}, "Expected an empty JSON object after deleting the post"

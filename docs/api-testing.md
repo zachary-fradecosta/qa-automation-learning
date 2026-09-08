@@ -162,3 +162,22 @@ data = response.json()
 assert data["title"] == payload["title"]
 assert data["id"] == 1
 ```
+
+## DELETE request example
+
+Run the demonstration script:
+
+```powershell
+python scripts/api_delete_demo.py
+
+```python
+response = requests.delete(
+    "https://jsonplaceholder.typicode.com/posts/1",
+    timeout=10,
+)
+
+assert response.status_code == 200, "Expected HTTP 200 after deleting the post"
+
+data = response.json()
+assert data == {}, "Expected an empty JSON object after deleting the post"
+```

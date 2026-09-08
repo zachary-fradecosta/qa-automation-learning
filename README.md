@@ -97,7 +97,8 @@ qa-automation-learning/
 | 15 | API response payload validation | ✅ |
 | 16 | API POST requests and resource creation | ✅ |
 | 17 | API PUT and PATCH requests | ✅ |
-| 18 | [...] | ⏳ |
+| 18 | API DELETE requests and response contracts | ✅ |
+| 19 | [...] | ⏳ |
 
 ---
 

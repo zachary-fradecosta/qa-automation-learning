@@ -3,6 +3,7 @@ truststore.inject_into_ssl()
 
 import requests
 
+
 url = "https://jsonplaceholder.typicode.com/posts/1"
 payload = {
     "id": 1,

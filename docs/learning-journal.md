@@ -275,3 +275,20 @@ A POST API test validates both the creation status and the response contract. Th
 PUT represents a full replacement of a resource, while PATCH updates only selected fields. Choosing the correct HTTP method protects data from unintended changes.
 
 ---
+
+### Day 18 — API DELETE Requests
+
+#### What I learned
+
+- Used the `DELETE` HTTP method to request resource deletion.
+- Created a DELETE request with `requests.delete()`.
+- Learned that a successful deletion response can vary depending on the API contract.
+- Validated the JSONPlaceholder DELETE response: `200 OK` and an empty JSON object.
+- Added clear assertion messages to make API failures easier to diagnose.
+- Executed the API test suite separately with the `api` marker.
+
+#### Key takeaway
+
+A successful DELETE request does not always return the same status code or response body. API tests must validate the documented contract of the API being tested.
+
+---

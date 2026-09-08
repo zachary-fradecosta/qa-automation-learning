@@ -22,3 +22,16 @@ def user_factory():
 
     return create_user
 
+
+@pytest.fixture
+def api_base_url():
+    return "https://jsonplaceholder.typicode.com"
+
+
+@pytest.fixture
+def valid_post_payload():
+    return {
+        "title": "My first API post",
+        "body": "Created during QA Automation learning",
+        "userId": 1,
+    }

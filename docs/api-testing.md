@@ -169,6 +169,7 @@ Run the demonstration script:
 
 ```powershell
 python scripts/api_delete_demo.py
+```
 
 ```python
 response = requests.delete(
@@ -181,3 +182,39 @@ assert response.status_code == 200, "Expected HTTP 200 after deleting the post"
 data = response.json()
 assert data == {}, "Expected an empty JSON object after deleting the post"
 ```
+
+## Reusable API configuration with Pytest fixtures
+
+Store shared API configuration and reusable test data in `tests/conftest.py`.
+
+```python
+@pytest.fixture
+def api_base_url():
+    return "https://jsonplaceholder.typicode.com"
+
+
+@pytest.fixture
+def valid_post_payload():
+    return {
+        "title": "My first API post",
+        "body": "Created during QA Automation learning",
+        "userId": 1,
+    }
+```
+
+Pytest injects these fixtures automatically into tests. Build endpoint URLs from the shared base URL and reuse the payload where required.
+
+```python
+def test_create_post_returns_created(api_base_url, valid_post_payload):
+    url = f"{api_base_url}/posts"
+
+    response = requests.post(
+        url,
+        json=valid_post_payload,
+        timeout=10,
+    )
+
+    assert response.status_code == 201
+```
+
+Centralizing the base URL prevents duplicated configuration, makes environment changes safer, and reduces the risk of sending write requests to the wrong environment.

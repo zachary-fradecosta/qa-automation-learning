@@ -292,3 +292,21 @@ PUT represents a full replacement of a resource, while PATCH updates only select
 A successful DELETE request does not always return the same status code or response body. API tests must validate the documented contract of the API being tested.
 
 ---
+
+### Day 19 — Reusable API Test Configuration
+
+#### What I learned
+
+- Used a Pytest fixture to centralize the API base URL.
+- Built API URLs dynamically with f-strings.
+- Removed duplicated API URLs from test files.
+- Created a reusable POST payload fixture.
+- Separated API configuration, test data, requests, and assertions.
+- Verified the API suite independently and the complete test suite.
+
+#### Key takeaway
+
+Centralizing API configuration makes automated tests easier to maintain and safer to run across different environments.
+
+---
+

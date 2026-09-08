@@ -98,7 +98,8 @@ qa-automation-learning/
 | 16 | API POST requests and resource creation | ✅ |
 | 17 | API PUT and PATCH requests | ✅ |
 | 18 | API DELETE requests and response contracts | ✅ |
-| 19 | [...] | ⏳ |
+| 19 | Reusable API configuration with Pytest fixtures | ✅ |
+| 20 | [...] | ⏳ |
 
 ---
 

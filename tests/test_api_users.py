@@ -1,10 +1,11 @@
 import requests
 import pytest
 
+
 @pytest.mark.regression
 @pytest.mark.api
-def test_get_user_by_id():
-    url = "https://jsonplaceholder.typicode.com/users/1"
+def test_get_user_by_id(api_base_url):
+    url = f"{api_base_url}/users/1"
     response = requests.get(url, timeout=10)
     
     assert response.status_code == 200
@@ -22,16 +23,16 @@ def test_get_user_by_id():
 
 @pytest.mark.regression
 @pytest.mark.api
-def test_get_unknown_user_returns_not_found():
-    url = "https://jsonplaceholder.typicode.com/users/999"
+def test_get_unknown_user_returns_not_found(api_base_url):
+    url = f"{api_base_url}/users/999"
     response = requests.get(url, timeout=10)
 
     assert response.status_code == 404
 
 @pytest.mark.regression
 @pytest.mark.api
-def test_get_all_users_returns_valid_user_list():
-    url = "https://jsonplaceholder.typicode.com/users"
+def test_get_all_users_returns_valid_user_list(api_base_url):
+    url = f"{api_base_url}/users"
     response = requests.get(url, timeout=10)
 
     assert response.status_code == 200

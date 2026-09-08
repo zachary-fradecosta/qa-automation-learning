@@ -4,6 +4,8 @@ from utils.json_loader import load_users
 import truststore
 truststore.inject_into_ssl()
 
+import requests
+
 
 @pytest.fixture
 def users():
@@ -35,3 +37,9 @@ def valid_post_payload():
         "body": "Created during QA Automation learning",
         "userId": 1,
     }
+
+@pytest.fixture
+def api_session():
+    session = requests.Session()
+    yield session
+    session.close()

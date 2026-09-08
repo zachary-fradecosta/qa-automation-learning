@@ -48,31 +48,55 @@ qa-automation-learning/
 ├── day_03/
 │
 ├── data/
-│   └── users.json                              # Test data
+│   └── users.json                              # Local test data
 │
-├── docs/
-│   └── qa-automation-command-guide.md          # Commands Quick Guide
+├── docs/                                       # QA Automation reference guides
+│   ├── api-testing.md
+│   ├── git-and-github.md
+│   ├── pytest.md
+│   └── python-project.md
 │
-├── scripts/
-│   └── day04_demo.py                           # Demo execution script
+├── scripts/                                    # Standalone learning demonstrations
+│   ├── day04_demo.py
+│   ├── api_demo.py
+│   ├── api_post_demo.py
+│   ├── api_put_demo.py
+│   └── api_delete_demo.py
 │
-├── tests/
+├── tests/                                      # Automated test suite
 │   ├── conftest.py                             # Shared Pytest fixtures
+│   ├── test_api_posts.py
+│   ├── test_api_users.py
 │   ├── test_statistics.py
 │   └── test_user_helpers.py
 │
-├── utils/
+├── utils/                                      # Application helper functions
 │   ├── json_loader.py
 │   ├── statistics.py
 │   └── user_helpers.py
 │
 ├── .gitignore
+├── learning-journal.md                         # Daily learning notes and progress
 ├── pytest.ini                                  # Pytest configuration and markers
 ├── README.md
 └── requirements.txt
 ```
 
 ⚠️ This temporary structure will evolve into a real automation framework during the learning journey.
+
+---
+
+## Documentation
+
+The `docs/` folder contains practical reference guides for the technologies and commands used in this project.
+
+- `api-testing.md`: API testing concepts, HTTP requests, response validation, and reusable API fixtures.
+- `pytest.md`: Pytest commands, test markers, and test execution.
+- `git-and-github.md`: Git workflow and GitHub commands.
+- `python-project.md`: Useful Python project commands.
+- `learning-journal.md`:  Daily learning notes, key takeaways, completed exercises, and progress throughout the QA Automation curriculum.
+
+These guides are updated as new tools and QA Automation concepts are learned.
 
 ---
 
@@ -99,7 +123,8 @@ qa-automation-learning/
 | 17 | API PUT and PATCH requests | ✅ |
 | 18 | API DELETE requests and response contracts | ✅ |
 | 19 | Reusable API configuration with Pytest fixtures | ✅ |
-| 20 | [...] | ⏳ |
+| 20 | Reusable HTTP sessions for API tests | ✅ |
+| 21 | [...] | ⏳ |
 
 ---
 

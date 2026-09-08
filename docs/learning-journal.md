@@ -310,3 +310,20 @@ Centralizing API configuration makes automated tests easier to maintain and safe
 
 ---
 
+### Day 20 — Reusable HTTP Sessions
+
+#### What I learned
+
+- Created a reusable `requests.Session()` fixture.
+- Used `yield` in a Pytest fixture to prepare and clean up a resource.
+- Closed the HTTP session with `session.close()` after each test.
+- Replaced direct Requests calls with session methods.
+- Applied the shared session to GET, POST, PUT, PATCH, and DELETE tests.
+- Understood that an HTTP session does not select the target environment.
+
+#### Key takeaway
+
+A reusable HTTP session centralizes request configuration and prepares an API test suite for future authentication, headers, cookies, and shared connection settings.
+
+---
+

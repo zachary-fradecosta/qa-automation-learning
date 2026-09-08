@@ -218,3 +218,45 @@ def test_create_post_returns_created(api_base_url, valid_post_payload):
 ```
 
 Centralizing the base URL prevents duplicated configuration, makes environment changes safer, and reduces the risk of sending write requests to the wrong environment.
+
+
+## Reusable HTTP sessions
+
+Use a Pytest fixture to create a reusable HTTP session for API tests. `yield` provides the session to the test, and the code after `yield` cleans up the resource once the test is finished.
+
+```python
+import requests
+import pytest
+
+
+@pytest.fixture
+def api_session():
+    session = requests.Session()
+
+    yield session
+
+    session.close()
+```
+
+Inject the fixture into a test and use session methods instead of direct `requests` calls.
+
+```python
+def test_get_user_by_id(api_base_url, api_session):
+    url = f"{api_base_url}/users/1"
+
+    response = api_session.get(url, timeout=10)
+
+    assert response.status_code == 200
+```
+
+The same session object can send all HTTP methods:
+
+```python
+api_session.get(url, timeout=10)
+api_session.post(url, json=payload, timeout=10)
+api_session.put(url, json=payload, timeout=10)
+api_session.patch(url, json=payload, timeout=10)
+api_session.delete(url, timeout=10)
+```
+
+A session manages HTTP communication. The `api_base_url` fixture remains responsible for identifying the target environment.

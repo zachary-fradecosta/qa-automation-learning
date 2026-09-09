@@ -66,6 +66,7 @@ qa-automation-learning/
 ├── tests/                                      # Automated test suite
 │   ├── conftest.py                             # Shared Pytest fixtures
 │   ├── test_api_posts.py
+│   ├── test_api_session.py                     
 │   ├── test_api_users.py
 │   ├── test_statistics.py
 │   └── test_user_helpers.py
@@ -90,11 +91,11 @@ qa-automation-learning/
 
 The `docs/` folder contains practical reference guides for the technologies and commands used in this project.
 
-- `api-testing.md`: API testing concepts, HTTP requests, response validation, and reusable API fixtures.
-- `pytest.md`: Pytest commands, test markers, and test execution.
-- `git-and-github.md`: Git workflow and GitHub commands.
-- `python-project.md`: Useful Python project commands.
-- `learning-journal.md`:  Daily learning notes, key takeaways, completed exercises, and progress throughout the QA Automation curriculum.
+- [API Testing Guide](docs/api-testing.md): HTTP requests, response validation, reusable fixtures, and sessions.
+- [Pytest Guide](docs/pytest.md): Test execution, markers, and Pytest commands.
+- [Git and GitHub Guide](docs/git-and-github.md): Git workflow and GitHub commands.
+- [Python Project Guide](docs/python-project.md): Useful Python project commands.
+- [Learning Journal](learning-journal.md): Daily learning notes, key takeaways, exercises, and progress.
 
 These guides are updated as new tools and QA Automation concepts are learned.
 
@@ -124,7 +125,8 @@ These guides are updated as new tools and QA Automation concepts are learned.
 | 18 | API DELETE requests and response contracts | ✅ |
 | 19 | Reusable API configuration with Pytest fixtures | ✅ |
 | 20 | Reusable HTTP sessions for API tests | ✅ |
-| 21 | [...] | ⏳ |
+| 21 | HTTP headers and JSON API contracts | ✅ |
+| 22 | [...] | ⏳ |
 
 ---
 

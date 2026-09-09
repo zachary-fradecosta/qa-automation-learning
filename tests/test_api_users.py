@@ -19,6 +19,8 @@ def test_get_user_by_id(api_base_url, api_session):
     assert isinstance(data["name"], str)
     assert isinstance(data["email"], str)
 
+    assert response.headers["Content-Type"].startswith("application/json"), "The API response should declare JSON content type in the headers"
+    
 
 @pytest.mark.regression
 @pytest.mark.api

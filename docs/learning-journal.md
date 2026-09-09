@@ -327,3 +327,19 @@ A reusable HTTP session centralizes request configuration and prepares an API te
 
 ---
 
+### Day 21 — HTTP Headers and JSON API Contracts
+
+#### What I learned
+
+- Distinguished request headers from response headers.
+- Configured the shared API session to request JSON responses.
+- Used the `Accept` request header.
+- Validated the `Content-Type` response header.
+- Learned why `startswith("application/json")` is safer than an exact comparison.
+- Verified HTTP headers in GET and POST API tests.
+
+#### Key takeaway
+
+HTTP status codes alone are not enough to validate an API response. A reliable API test also checks that the response format matches the expected contract.
+
+---

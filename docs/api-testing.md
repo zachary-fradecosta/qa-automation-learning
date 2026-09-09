@@ -260,3 +260,47 @@ api_session.delete(url, timeout=10)
 ```
 
 A session manages HTTP communication. The `api_base_url` fixture remains responsible for identifying the target environment.
+
+
+## HTTP headers and JSON response contracts
+
+HTTP headers provide information about the request and response format. The `Accept` request header tells the API that the client expects JSON. The `Content-Type` response header tells the client which format the API actually returned.
+
+Configure the shared session in `tests/conftest.py`:
+
+```python
+@pytest.fixture
+def api_session():
+    session = requests.Session()
+    session.headers.update({"Accept": "application/json"})
+
+    yield session
+
+    session.close()
+```
+
+Test the session configuration:
+
+```python
+@pytest.mark.regression
+@pytest.mark.api
+def test_api_session_headers(api_session):
+    assert "Accept" in api_session.headers
+    assert api_session.headers["Accept"] == "application/json"
+```
+
+Validate that an API response declares JSON without making an overly strict comparison:
+
+```python
+assert response.headers["Content-Type"].startswith(
+    "application/json"
+), "The API response should declare JSON content type in the headers"
+```
+
+Use `response.request.headers` to inspect headers sent by the test, and `response.headers` to inspect headers received from the API.
+
+```python
+assert response.request.headers.get("Accept") == "application/json", (
+    "The API request should declare an Accept header for JSON responses"
+)
+```

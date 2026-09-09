@@ -1,3 +1,5 @@
+from urllib import response
+
 import pytest
 
 
@@ -15,6 +17,9 @@ def test_create_post_returns_created(api_base_url, valid_post_payload, api_sessi
     assert data["body"] == valid_post_payload["body"]
     assert data["userId"] == valid_post_payload["userId"]
     assert isinstance(data["id"], int)
+
+    assert response.request.headers.get("Accept") == "application/json", "The API request should declare an Accept header for JSON responses"
+    assert response.headers["Content-Type"].startswith("application/json"), "The API response should declare JSON content type in the headers"
 
 
 @pytest.mark.regression

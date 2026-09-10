@@ -343,3 +343,21 @@ A reusable HTTP session centralizes request configuration and prepares an API te
 HTTP status codes alone are not enough to validate an API response. A reliable API test also checks that the response format matches the expected contract.
 
 ---
+
+### Day 22 — Safe API Environment Configuration
+
+#### What I learned
+
+- Created a dedicated API configuration module.
+- Used `os.getenv()` to read the `QA_ENV` environment variable.
+- Configured `test` as the safe default environment.
+- Used a dictionary as a whitelist of approved environments.
+- Raised a `ValueError` for an invalid environment.
+- Used `monkeypatch` to test environment variables safely.
+- Removed the hardcoded API URL from `conftest.py`.
+
+#### Key takeaway
+
+API tests should target only approved environments. A whitelist and an explicit error for unknown environments reduce the risk of running write requests against the wrong system.
+
+---

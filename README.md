@@ -51,8 +51,11 @@ qa-automation-learning/
 │   └── users.json                              # Local test data
 │
 ├── docs/                                       # QA Automation reference guides
-│   ├── api-testing.md
+│   ├── api-requests.md
+│   ├── api-response-validation.md
+│   ├── api-test-architecture.md
 │   ├── git-and-github.md
+│   ├── learning-journal.md
 │   ├── pytest.md
 │   └── python-project.md
 │
@@ -65,6 +68,7 @@ qa-automation-learning/
 │
 ├── tests/                                      # Automated test suite
 │   ├── conftest.py                             # Shared Pytest fixtures
+│   ├── test_api_config.py                      # API environment configuration tests
 │   ├── test_api_posts.py
 │   ├── test_api_session.py                     
 │   ├── test_api_users.py
@@ -72,12 +76,12 @@ qa-automation-learning/
 │   └── test_user_helpers.py
 │
 ├── utils/                                      # Application helper functions
+│   ├── api_config.py                           # Safe API environment configuration
 │   ├── json_loader.py
 │   ├── statistics.py
 │   └── user_helpers.py
 │
 ├── .gitignore
-├── learning-journal.md                         # Daily learning notes and progress
 ├── pytest.ini                                  # Pytest configuration and markers
 ├── README.md
 └── requirements.txt
@@ -91,11 +95,13 @@ qa-automation-learning/
 
 The `docs/` folder contains practical reference guides for the technologies and commands used in this project.
 
-- [API Testing Guide](docs/api-testing.md): HTTP requests, response validation, reusable fixtures, and sessions.
+- [API Requests Guide](docs/api-requests.md): HTTP methods, endpoints, payloads, and status codes.
+- [API Response Validation Guide](docs/api-response-validation.md): JSON validation, required fields, types, and HTTP headers.
+- [API Test Architecture Guide](docs/api-test-architecture.md): Fixtures, sessions, reusable API configuration, and safe environments.
 - [Pytest Guide](docs/pytest.md): Test execution, markers, and Pytest commands.
 - [Git and GitHub Guide](docs/git-and-github.md): Git workflow and GitHub commands.
 - [Python Project Guide](docs/python-project.md): Useful Python project commands.
-- [Learning Journal](learning-journal.md): Daily learning notes, key takeaways, exercises, and progress.
+- [Learning Journal](docs/learning-journal.md): Daily learning notes, key takeaways, exercises, and progress.
 
 These guides are updated as new tools and QA Automation concepts are learned.
 
@@ -126,7 +132,8 @@ These guides are updated as new tools and QA Automation concepts are learned.
 | 19 | Reusable API configuration with Pytest fixtures | ✅ |
 | 20 | Reusable HTTP sessions for API tests | ✅ |
 | 21 | HTTP headers and JSON API contracts | ✅ |
-| 22 | [...] | ⏳ |
+| 22 | Safe API environment configuration | ✅ |
+| 23 | [...] | ⏳ |
 
 ---
 

@@ -1,5 +1,6 @@
 import pytest
 from utils.json_loader import load_users
+from utils.api_config import get_api_base_url
 
 import truststore
 truststore.inject_into_ssl()
@@ -27,7 +28,7 @@ def user_factory():
 
 @pytest.fixture
 def api_base_url():
-    return "https://jsonplaceholder.typicode.com"
+    return get_api_base_url()
 
 
 @pytest.fixture

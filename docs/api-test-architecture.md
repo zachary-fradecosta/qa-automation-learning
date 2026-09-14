@@ -108,3 +108,47 @@ def test_get_api_base_url_returns_error_when_env_is_invalid(monkeypatch):
 ```
 
 This protects the test suite from accidentally targeting an environment that has not been explicitly approved.
+
+## Mock API tests with requests-mock
+
+Mocked API tests simulate HTTP responses without sending a request to an external service. They are fast, deterministic, and useful for testing scenarios such as `404 Not Found` and `500 Internal Server Error`.
+
+Create a reusable API client function:
+
+```python
+def get_user_by_id(api_session, api_base_url, user_id):
+    url = f"{api_base_url}/users/{user_id}"
+
+    return api_session.get(url, timeout=10)
+```
+
+Use the `requests_mock` Pytest fixture to configure the simulated response before calling the API client.
+
+```python
+@pytest.mark.regression
+@pytest.mark.api
+def test_get_user_by_id(api_session, api_base_url, requests_mock):
+    url = f"{api_base_url}/users/1"
+    mock_user = {"id": 1, "name": "Test User"}
+
+    requests_mock.get(url, json=mock_user, status_code=200)
+
+    response = get_user_by_id(api_session, api_base_url, 1)
+    data = response.json()
+
+    assert response.status_code == 200
+    assert data["id"] == mock_user["id"]
+    assert data["name"] == mock_user["name"]
+```
+
+A mocked error scenario can be configured with only a status code:
+
+```python
+requests_mock.get(url, status_code=404)
+
+response = get_user_by_id(api_session, api_base_url, 999)
+
+assert response.status_code == 404, "Expected HTTP 404 for an unknown user"
+```
+
+Mocked tests verify how the client handles known responses. Live API tests remain necessary to verify the real API contract and network integration.

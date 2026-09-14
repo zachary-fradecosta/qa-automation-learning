@@ -361,3 +361,20 @@ HTTP status codes alone are not enough to validate an API response. A reliable A
 API tests should target only approved environments. A whitelist and an explicit error for unknown environments reduce the risk of running write requests against the wrong system.
 
 ---
+
+### Day 23 — Mock API Testing
+
+#### What I learned
+
+- Created a reusable API client function.
+- Learned the difference between live API tests and mocked API tests.
+- Used the `requests_mock` Pytest fixture.
+- Simulated HTTP `200`, `404`, and `500` responses.
+- Tested API client behavior without calling an external API.
+- Understood why mocked tests and live API tests are complementary.
+
+#### Key takeaway
+
+Mocked API tests are fast, deterministic, and useful for testing error scenarios. They cannot fully replace live API tests because they do not verify the real external service.
+
+---

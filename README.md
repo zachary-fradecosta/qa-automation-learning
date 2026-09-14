@@ -61,6 +61,7 @@ qa-automation-learning/
 │
 ├── scripts/                                    # Standalone learning demonstrations
 │   ├── day04_demo.py
+│   ├── api_client.py                            # Reusable API client functions
 │   ├── api_demo.py
 │   ├── api_post_demo.py
 │   ├── api_put_demo.py
@@ -68,6 +69,7 @@ qa-automation-learning/
 │
 ├── tests/                                      # Automated test suite
 │   ├── conftest.py                             # Shared Pytest fixtures
+│   ├── test_api_client.py                      # Mocked API client tests
 │   ├── test_api_config.py                      # API environment configuration tests
 │   ├── test_api_posts.py
 │   ├── test_api_session.py                     
@@ -133,7 +135,8 @@ These guides are updated as new tools and QA Automation concepts are learned.
 | 20 | Reusable HTTP sessions for API tests | ✅ |
 | 21 | HTTP headers and JSON API contracts | ✅ |
 | 22 | Safe API environment configuration | ✅ |
-| 23 | [...] | ⏳ |
+| 23 | Mocked API client testing with requests-mock | ✅ |
+| 24 | [...] | ⏳ |
 
 ---
 

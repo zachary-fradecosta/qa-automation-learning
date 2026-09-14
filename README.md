@@ -136,7 +136,8 @@ These guides are updated as new tools and QA Automation concepts are learned.
 | 21 | HTTP headers and JSON API contracts | ✅ |
 | 22 | Safe API environment configuration | ✅ |
 | 23 | Mocked API client testing with requests-mock | ✅ |
-| 24 | [...] | ⏳ |
+| 24 | HTTP error handling in the API client | ✅ |
+| 25 | [...] | ⏳ |
 
 ---
 

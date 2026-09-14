@@ -152,3 +152,44 @@ assert response.status_code == 404, "Expected HTTP 404 for an unknown user"
 ```
 
 Mocked tests verify how the client handles known responses. Live API tests remain necessary to verify the real API contract and network integration.
+
+## HTTP error handling in an API client
+
+An API client should return parsed data only when an HTTP request succeeds. Use `response.raise_for_status()` before reading the JSON response.
+
+```python
+def get_user_by_id(api_session, api_base_url, user_id):
+    url = f"{api_base_url}/users/{user_id}"
+
+    response = api_session.get(url, timeout=10)
+    response.raise_for_status()
+
+    return response.json()
+```
+
+For successful responses, the client returns a dictionary:
+
+```python
+user_data = get_user_by_id(api_session, api_base_url, 1)
+
+assert user_data["id"] == mock_user["id"]
+assert user_data["name"] == mock_user["name"]
+```
+
+For HTTP errors, test that the client raises `requests.exceptions.HTTPError`:
+
+```python
+with pytest.raises(requests.exceptions.HTTPError):
+    get_user_by_id(api_session, api_base_url, 999)
+```
+
+To distinguish a server error from another HTTP error, inspect the response attached to the exception:
+
+```python
+with pytest.raises(requests.exceptions.HTTPError) as exc_info:
+    get_user_by_id(api_session, api_base_url, 1)
+
+assert exc_info.value.response.status_code == 500, (
+    "Expected HTTP 500 for a server error, not a valid user response"
+)
+```

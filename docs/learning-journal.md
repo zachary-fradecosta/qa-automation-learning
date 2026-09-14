@@ -378,3 +378,21 @@ API tests should target only approved environments. A whitelist and an explicit 
 Mocked API tests are fast, deterministic, and useful for testing error scenarios. They cannot fully replace live API tests because they do not verify the real external service.
 
 ---
+
+### Day 24 — HTTP Error Handling in the API Client
+
+#### What I learned
+
+- Used `response.raise_for_status()` in an API client.
+- Changed the API client contract to return JSON data only for successful responses.
+- Tested `404 Not Found` as an `HTTPError`.
+- Tested `500 Internal Server Error` as an `HTTPError`.
+- Verified the HTTP status attached to an exception.
+- Understood why `None` is not precise enough for every API failure.
+
+#### Key takeaway
+
+An API client should return valid data for successful responses and raise explicit exceptions for HTTP failures. This prevents errors from being treated as valid business data.
+
+---
+

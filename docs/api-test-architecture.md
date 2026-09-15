@@ -193,3 +193,41 @@ assert exc_info.value.response.status_code == 500, (
     "Expected HTTP 500 for a server error, not a valid user response"
 )
 ```
+
+## Testing timeouts and network failures
+
+`requests_mock` can expose the timeout received by the last intercepted request.
+
+```python
+get_user_by_id(api_session, api_base_url, 1, timeout=3)
+
+assert requests_mock.last_request.timeout == 3
+```
+
+Use `exc` to simulate an exception instead of returning an HTTP response.
+
+```python
+requests_mock.get(
+    url,
+    exc=requests.exceptions.Timeout,
+)
+
+with pytest.raises(requests.exceptions.Timeout):
+    get_user_by_id(api_session, api_base_url, 1)
+```
+
+A connection failure can be tested separately:
+
+```python
+requests_mock.get(
+    url,
+    exc=requests.exceptions.ConnectionError,
+)
+
+with pytest.raises(requests.exceptions.ConnectionError):
+    get_user_by_id(api_session, api_base_url, 1)
+```
+
+Do not add `json` or `status_code` when the mock raises a network exception because no HTTP response is produced.
+
+

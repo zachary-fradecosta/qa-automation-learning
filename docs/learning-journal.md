@@ -396,3 +396,20 @@ An API client should return valid data for successful responses and raise explic
 
 ---
 
+### Day 25 — Configurable Timeouts and Network Failures
+
+#### What I learned
+
+- Added a configurable timeout to an API client function.
+- Preserved a default timeout for existing client calls.
+- Verified default and custom timeout values with `requests_mock`.
+- Distinguished HTTP errors from network errors.
+- Simulated `Timeout` and `ConnectionError` exceptions.
+- Tested network failures without waiting for a real incident.
+
+#### Key takeaway
+
+An HTTP error means that a server returned an error response, while a timeout or connection error means that the client could not receive a usable response. These failures must remain distinguishable.
+
+
+---

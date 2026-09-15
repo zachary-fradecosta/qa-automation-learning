@@ -114,3 +114,28 @@ assert response.status_code == 200
 ```
 
 A successful DELETE response depends on the API contract. Some APIs return `200 OK` with a body; others return `204 No Content` with no body. JSONPlaceholder simulates write operations and returns `200` with an empty JSON object for this endpoint.
+
+
+## Configurable request timeouts
+
+Always define a timeout for external API requests. A client function can provide a safe default while allowing the caller to choose a different value.
+
+```python
+def get_user_by_id(api_session, api_base_url, user_id, timeout=10):
+    url = f"{api_base_url}/users/{user_id}"
+
+    response = api_session.get(url, timeout=timeout)
+    response.raise_for_status()
+
+    return response.json()
+```
+
+```text
+HTTPError       → the server returned a 4xx or 5xx response
+Timeout         → the client waited too long for the connection or data
+ConnectionError → the connection could not be established
+```
+
+A Requests timeout is not necessarily a strict limit for the complete operation. It controls how long the client waits during connection and response activity.
+
+

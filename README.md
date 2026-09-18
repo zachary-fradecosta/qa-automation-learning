@@ -138,7 +138,8 @@ These guides are updated as new tools and QA Automation concepts are learned.
 | 23 | Mocked API client testing with requests-mock | ✅ |
 | 24 | HTTP error handling in the API client | ✅ |
 | 25 | Configurable API timeouts and network failures | ✅ |
-| 26 | [...] | ⏳ |
+| 26 | API query parameters and filtered collections | ✅ |
+| 27 | [...] | ⏳ |
 
 ---
 

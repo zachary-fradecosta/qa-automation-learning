@@ -139,3 +139,40 @@ ConnectionError → the connection could not be established
 A Requests timeout is not necessarily a strict limit for the complete operation. It controls how long the client waits during connection and response activity.
 
 
+## Query parameters and filtering
+
+Query parameters filter or modify a collection request.
+
+```text
+/users/1         → retrieve one specific user
+/posts           → retrieve the posts collection
+/posts?userId=1  → retrieve posts belonging to user 1
+```
+
+Use the Requests `params` argument instead of building the query string manually.
+
+```python
+def get_posts_by_user_id(
+    api_session,
+    api_base_url,
+    user_id,
+    timeout=10,
+):
+    url = f"{api_base_url}/posts"
+    params = {
+        "userId": user_id,
+    }
+
+    response = api_session.get(
+        url,
+        params=params,
+        timeout=timeout,
+    )
+    response.raise_for_status()
+
+    return response.json()
+```
+
+Requests converts the dictionary into the query string `?userId=1` and handles value encoding.
+
+

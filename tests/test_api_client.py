@@ -1,6 +1,6 @@
 import pytest
 import requests
-from utils.api_client import get_user_by_id
+from utils.api_client import get_user_by_id, get_posts_by_user_id
 
 @pytest.mark.regression
 @pytest.mark.api
@@ -110,3 +110,62 @@ def test_get_user_by_id_raises_connection_error_when_connection_fails(api_sessio
 
     with pytest.raises(requests.exceptions.ConnectionError):
         get_user_by_id(api_session, api_base_url, 1)
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_get_posts_by_user_id(api_session, api_base_url, requests_mock):
+    url = f"{api_base_url}/posts"
+    user_id = 1
+    mock_posts = [
+        {"userId": user_id},
+        {"userId": user_id}
+    ]
+    requests_mock.get(
+        url,
+        json=mock_posts,
+        status_code=200
+    )
+
+    posts = get_posts_by_user_id(api_session, api_base_url, user_id=1)
+    assert posts == mock_posts, "Expected the returned posts to match the mock posts"
+    assert len(posts) == 2, "Expected 2 posts for userId 1"
+    assert all(post["userId"] == user_id for post in posts), "Expected all posts to have userId 1"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_get_posts_by_user_id_query_params(api_session, api_base_url, requests_mock):
+    url = f"{api_base_url}/posts"
+    user_id = 1
+    mock_posts = [
+        {"userId": user_id, "id": 1},
+        {"userId": user_id, "id": 2}
+    ]
+    requests_mock.get(
+        url,
+        json=mock_posts,
+        status_code=200
+    )
+
+    get_posts_by_user_id(api_session, api_base_url, user_id=user_id)
+    query_params = requests_mock.last_request.qs
+    assert query_params.get("userid") == [str(user_id)], "Expected the query parameter userId to match the requested user_id"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_get_posts_by_user_id_empty(api_session, api_base_url, requests_mock):
+    url = f"{api_base_url}/posts"
+    user_id = 999
+    mock_posts = []
+    requests_mock.get(
+        url,
+        json=mock_posts,
+        status_code=200
+    )
+
+    posts = get_posts_by_user_id(api_session, api_base_url, user_id=user_id)
+    assert isinstance(posts, list), "Expected the returned posts to be a list"
+    assert posts == mock_posts, "Expected the returned posts to be an empty list"
+    

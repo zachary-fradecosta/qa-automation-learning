@@ -231,3 +231,22 @@ with pytest.raises(requests.exceptions.ConnectionError):
 Do not add `json` or `status_code` when the mock raises a network exception because no HTTP response is produced.
 
 
+## Testing query parameters
+
+Use the request history provided by `requests_mock` to inspect the query string actually sent by the client.
+
+```python
+get_posts_by_user_id(
+    api_session,
+    api_base_url,
+    user_id=1,
+)
+
+query_params = requests_mock.last_request.qs
+
+assert query_params.get("userid") == ["1"]
+```
+
+In the default `requests-mock` history, query parameter names are lowercased and values are represented as lists of strings.
+
+

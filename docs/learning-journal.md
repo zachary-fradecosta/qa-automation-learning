@@ -413,3 +413,21 @@ An HTTP error means that a server returned an error response, while a timeout or
 
 
 ---
+
+### Day 26 — API Query Parameters and Filtered Collections
+
+#### What I learned
+
+- Distinguished path parameters from query parameters.
+- Used the Requests `params` argument to build a query string.
+- Created an API client function to retrieve posts by user ID.
+- Verified the query parameter actually sent by the client.
+- Used `all()` to validate every item in a filtered collection.
+- Distinguished an empty collection from a missing individual resource.
+
+#### Key takeaway
+
+A collection test must verify both the returned data and the filter sent in the request. A successful filtered request can legitimately return an empty list.
+
+---
+

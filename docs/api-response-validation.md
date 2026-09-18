@@ -70,6 +70,7 @@ assert response.headers["Content-Type"].startswith("application/json"), (
 
 Use `startswith("application/json")` rather than an exact equality check because valid responses can include an encoding such as `application/json; charset=utf-8`.
 
+
 ## Useful assertion messages
 
 An assertion message should explain the expected API contract:
@@ -79,3 +80,23 @@ assert response.status_code == 201, "Expected HTTP 201 after creating a post"
 ```
 
 Messages make a failed test easier to diagnose in local execution and CI logs.
+
+
+## Validating filtered collections
+
+A filtered collection test should verify the collection type, its expected size, and the business rule applied to every item.
+
+```python
+assert isinstance(posts, list)
+assert len(posts) == 2
+assert all(post["userId"] == user_id for post in posts)
+```
+
+A valid collection request with no matching resources can return `200 OK` and an empty list.
+
+```python
+assert isinstance(posts, list)
+assert posts == []
+```
+
+This differs from requesting an individual resource that does not exist, which can return `404 Not Found`.

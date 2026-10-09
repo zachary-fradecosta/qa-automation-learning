@@ -1,5 +1,7 @@
 # API Test Architecture Guide
 
+
+
 ## Shared API base URL
 
 Keep the API base URL in a Pytest fixture instead of repeating it in every test.
@@ -15,6 +17,8 @@ Build endpoint URLs with f-strings:
 ```python
 url = f"{api_base_url}/users/1"
 ```
+
+
 
 ## Reusable request data
 
@@ -39,6 +43,8 @@ def test_create_post_returns_created(api_base_url, valid_post_payload):
 
     assert response.status_code == 201
 ```
+
+
 
 ## Reusable HTTP sessions
 
@@ -65,6 +71,8 @@ api_session.patch(url, json=payload, timeout=10)
 api_session.delete(url, timeout=10)
 ```
 
+
+
 ## Safe environment configuration
 
 Keep environment selection in `utils/api_config.py`. Only approved environments should be allowed.
@@ -89,6 +97,8 @@ def get_api_base_url():
 
 The default environment is `test`. An unknown value causes an explicit error instead of allowing an arbitrary URL.
 
+
+
 ## Test configuration without network calls
 
 Use Pytest's `monkeypatch` fixture to change environment variables temporarily.
@@ -108,6 +118,8 @@ def test_get_api_base_url_returns_error_when_env_is_invalid(monkeypatch):
 ```
 
 This protects the test suite from accidentally targeting an environment that has not been explicitly approved.
+
+
 
 ## Mock API tests with requests-mock
 
@@ -153,6 +165,8 @@ assert response.status_code == 404, "Expected HTTP 404 for an unknown user"
 
 Mocked tests verify how the client handles known responses. Live API tests remain necessary to verify the real API contract and network integration.
 
+
+
 ## HTTP error handling in an API client
 
 An API client should return parsed data only when an HTTP request succeeds. Use `response.raise_for_status()` before reading the JSON response.
@@ -194,6 +208,8 @@ assert exc_info.value.response.status_code == 500, (
 )
 ```
 
+
+
 ## Testing timeouts and network failures
 
 `requests_mock` can expose the timeout received by the last intercepted request.
@@ -231,6 +247,7 @@ with pytest.raises(requests.exceptions.ConnectionError):
 Do not add `json` or `status_code` when the mock raises a network exception because no HTTP response is produced.
 
 
+
 ## Testing query parameters
 
 Use the request history provided by `requests_mock` to inspect the query string actually sent by the client.
@@ -250,3 +267,37 @@ assert query_params.get("userid") == ["1"]
 In the default `requests-mock` history, query parameter names are lowercased and values are represented as lists of strings.
 
 
+
+## Testing Pagination Boundaries
+
+Pytest parametrization can verify several pagination boundaries independently:
+
+```python
+@pytest.mark.parametrize(
+    "page, per_page",
+    [
+        (0, 2),
+        (-1, 2),
+        (1, 0),
+        (1, 101),
+    ],
+)
+def test_rejects_invalid_pagination(
+    api_session,
+    api_base_url,
+    requests_mock,
+    page,
+    per_page,
+):
+    with pytest.raises(ValueError):
+        get_posts_page(
+            api_session,
+            api_base_url,
+            page=page,
+            per_page=per_page,
+        )
+
+    assert requests_mock.called is False
+```
+
+Each parametrized input appears as an independent Pytest case. Verifying `requests_mock.called is False` proves that invalid client input is rejected before a network request is attempted.

@@ -1,11 +1,13 @@
 # API Requests Guide
 
+
 ## Install API dependencies
 
 ```powershell
 pip install requests
 pip install truststore
 ```
+
 
 ## HTTPS certificate issue
 
@@ -21,6 +23,7 @@ import requests
 
 Do not use `verify=False` in professional test code because it disables HTTPS certificate verification.
 
+
 ## API testing flow
 
 ```text
@@ -32,6 +35,7 @@ JSON response body
 ↓
 Assertions
 ```
+
 
 ## Important HTTP status codes
 
@@ -45,6 +49,7 @@ Assertions
 500 → server error
 ```
 
+
 ## Run API demonstration scripts
 
 ```powershell
@@ -53,6 +58,7 @@ python scripts/api_post_demo.py
 python scripts/api_put_demo.py
 python scripts/api_delete_demo.py
 ```
+
 
 ## GET request
 
@@ -64,6 +70,7 @@ assert response.status_code == 200
 data = response.json()
 assert "name" in data
 ```
+
 
 ## POST request
 
@@ -81,6 +88,7 @@ assert response.status_code == 201
 
 Use `json=payload` to send a Python dictionary as JSON.
 
+
 ## PUT request
 
 Use `PUT` when replacing a complete resource.
@@ -90,6 +98,7 @@ response = requests.put(url, json=payload, timeout=10)
 
 assert response.status_code == 200
 ```
+
 
 ## PATCH request
 
@@ -105,6 +114,7 @@ response = requests.patch(url, json=payload, timeout=10)
 assert response.status_code == 200
 ```
 
+
 ## DELETE request
 
 ```python
@@ -114,6 +124,7 @@ assert response.status_code == 200
 ```
 
 A successful DELETE response depends on the API contract. Some APIs return `200 OK` with a body; others return `204 No Content` with no body. JSONPlaceholder simulates write operations and returns `200` with an empty JSON object for this endpoint.
+
 
 
 ## Configurable request timeouts
@@ -137,6 +148,7 @@ ConnectionError → the connection could not be established
 ```
 
 A Requests timeout is not necessarily a strict limit for the complete operation. It controls how long the client waits during connection and response activity.
+
 
 
 ## Query parameters and filtering
@@ -176,3 +188,28 @@ def get_posts_by_user_id(
 Requests converts the dictionary into the query string `?userId=1` and handles value encoding.
 
 
+
+## Pagination Query Parameters
+
+Pagination limits the number of resources returned by one API request. The client can send the requested page and page size through the `params` argument:
+
+```python
+params = {
+    "_page": page,
+    "_per_page": per_page,
+}
+
+response = api_session.get(
+    f"{api_base_url}/posts",
+    params=params,
+    timeout=timeout,
+)
+```
+
+Requests builds a URL such as:
+
+```text
+/posts?_page=2&_per_page=10
+```
+
+Pagination parameter names depend on the API contract. Common alternatives include `page`, `page_size`, `limit`, `offset`, `_page`, and `_per_page`.

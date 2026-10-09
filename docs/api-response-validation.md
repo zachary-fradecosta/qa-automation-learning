@@ -17,6 +17,7 @@ assert isinstance(data["name"], str)
 assert isinstance(data["email"], str)
 ```
 
+
 ## Validate a JSON list
 
 ```python
@@ -31,6 +32,8 @@ assert all(required_fields.issubset(user) for user in data)
 
 `all(...)` verifies that every item in the list satisfies the condition.
 
+
+
 ## Validate a created resource
 
 ```python
@@ -42,6 +45,7 @@ assert data["body"] == payload["body"]
 assert data["userId"] == payload["userId"]
 assert isinstance(data["id"], int)
 ```
+
 
 ## Request and response headers
 
@@ -71,6 +75,7 @@ assert response.headers["Content-Type"].startswith("application/json"), (
 Use `startswith("application/json")` rather than an exact equality check because valid responses can include an encoding such as `application/json; charset=utf-8`.
 
 
+
 ## Useful assertion messages
 
 An assertion message should explain the expected API contract:
@@ -80,6 +85,7 @@ assert response.status_code == 201, "Expected HTTP 201 after creating a post"
 ```
 
 Messages make a failed test easier to diagnose in local execution and CI logs.
+
 
 
 ## Validating filtered collections
@@ -100,3 +106,29 @@ assert posts == []
 ```
 
 This differs from requesting an individual resource that does not exist, which can return `404 Not Found`.
+
+
+
+## Validating Paginated Responses
+
+A paginated response can contain both page data and pagination metadata:
+
+```python
+{
+    "prev": 1,
+    "next": 3,
+    "last": 3,
+    "pages": 3,
+    "items": 5,
+    "data": [...]
+}
+```
+
+The number of items in `data` represents the current page, while `items` represents the complete collection. A page size is normally a maximum rather than a mandatory result count. The final page can therefore contain fewer items:
+
+```python
+assert len(response_data["data"]) <= per_page
+assert response_data["next"] is None
+```
+
+Tests should validate page content, total collection metadata, navigation metadata, and partial final pages according to the API contract.

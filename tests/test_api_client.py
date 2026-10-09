@@ -1,6 +1,8 @@
 import pytest
 import requests
-from utils.api_client import get_user_by_id, get_posts_by_user_id
+import requests_mock
+from tests.conftest import api_base_url, api_session
+from utils.api_client import get_user_by_id, get_posts_by_user_id, get_posts_page
 
 @pytest.mark.regression
 @pytest.mark.api
@@ -168,4 +170,174 @@ def test_get_posts_by_user_id_empty(api_session, api_base_url, requests_mock):
     posts = get_posts_by_user_id(api_session, api_base_url, user_id=user_id)
     assert isinstance(posts, list), "Expected the returned posts to be a list"
     assert posts == mock_posts, "Expected the returned posts to be an empty list"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_get_posts_page_returns_requested_page(api_session, api_base_url, requests_mock):
+    url = f"{api_base_url}/posts"
     
+    mock_response = {
+        "prev": 1,
+        "next": 3,
+        "pages": 2,
+        "items": 5,
+        "data": [
+            {
+                "id": 3,
+                "userId": 1,
+                "title": "Third post"
+            },
+            {
+                "id": 4,
+                "userId": 1,
+                "title": "Fourth post"
+            }
+        ]
+    }
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    page = 2
+    per_page = 2
+    posts_page = get_posts_page(api_session, api_base_url, page=page, per_page=per_page)
+    assert isinstance(posts_page, dict), "Expected the returned posts page to be a dictionary"
+    assert isinstance(posts_page.get("data"), list), "Expected the 'data' field to be a list"
+    
+    assert len(posts_page.get("data")) == 2, "Expected 2 posts in the 'data' field"
+    post_ids = [post["id"] for post in posts_page.get("data")]
+    assert post_ids == [3, 4], "Expected the post IDs in the 'data' field to be [3, 4]"
+    assert posts_page.get("items") == 5, "Expected the 'items' field to be 5"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_get_posts_page_sends_pagination_query_params(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/posts"
+    page = 2
+    per_page = 2
+
+    requests_mock.get(
+        url,
+        json={"data": []},
+        status_code=200
+    )
+
+    get_posts_page(api_session, api_base_url, page=page, per_page=per_page)
+    query_params = requests_mock.last_request.qs
+    assert query_params.get("_page") == [str(page)], "Expected the query parameter page to match the requested page"
+    assert query_params.get("_per_page") == [str(per_page)], "Expected the query parameter per_page to match the requested per_page"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_get_posts_page_returns_partial_last_page(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/posts"
+    
+    mock_response = {
+        "prev": 2,
+        "next": None,
+        "last": 3,
+        "pages": 3,
+        "items": 5,
+        "data": [
+            {
+                "id": 5,
+                "userId": 1,
+                "title": "Fifth post"
+            }
+        ]
+    }
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    page = 3
+    per_page = 2
+    posts_page = get_posts_page(api_session, api_base_url, page=page, per_page=per_page)
+    assert posts_page.get("last") == 3, "Expected the 'last' field to be 3"
+    assert posts_page.get("next") is None, "Expected the 'next' field to be None"
+    assert len(posts_page.get("data")) == 1, "Expected the 'data' field to contain 1 post"
+    post_ids = [post["id"] for post in posts_page.get("data")]
+    assert post_ids == [5], "Expected the post IDs in the 'data' field to be [5]"
+    assert len(posts_page.get("data")) <= per_page, "Expected the 'data' field to contain at most 'per_page' posts"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+@pytest.mark.parametrize(
+    "page, per_page",
+    [
+        (0, 2),
+        (-3, 2),
+        (None, 26),
+        (1, None),
+        (2, -2),
+        (3, 0),
+        (4, 1000),
+    ],
+)
+def test_get_posts_page_rejects_invalid_pagination(
+    api_session,
+    api_base_url,
+    requests_mock,
+    page,
+    per_page,
+):
+    with pytest.raises(ValueError):
+        get_posts_page(
+            api_session,
+            api_base_url,
+            page=page,
+            per_page=per_page,  
+        )
+
+    assert requests_mock.called is False
+
+
+@pytest.mark.regression
+@pytest.mark.api
+@pytest.mark.parametrize(
+    "page, per_page",
+    [
+        (1, 1),
+        (1, 7),
+        (1, 100),
+    ],
+)
+def test_get_posts_page_accepts_valid_boundaries(
+    api_session,
+    api_base_url,
+    requests_mock,
+    page,
+    per_page,
+):
+    url = f"{api_base_url}/posts"
+    mock_response = {
+        "data": []
+    }
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    posts_page = get_posts_page(api_session, api_base_url, page=page, per_page=per_page)
+    assert posts_page == mock_response, "Expected the posts page to match the mock response"
+    assert requests_mock.called is True, "Expected the requests_mock to have been called"

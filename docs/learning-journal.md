@@ -431,3 +431,19 @@ A collection test must verify both the returned data and the filter sent in the 
 
 ---
 
+### Day 27 — API Pagination and Boundary Validation
+
+#### What I learned
+
+- Implemented pagination using `_page` and `_per_page` query parameters.
+- Tested intermediate and partial final pages with mocked API responses.
+- Verified the query parameters actually sent by the API client.
+- Added client-side validation for page numbers and page sizes.
+- Used parametrized tests to cover valid and invalid boundary values.
+- Verified that invalid input is rejected before any HTTP request is sent.
+
+#### Key takeaway
+
+Pagination tests must distinguish the maximum page size from the actual number of returned items. A final page may contain fewer items without indicating an API defect. Validating pagination inputs before sending a request also prevents unnecessary and invalid network calls.
+
+---

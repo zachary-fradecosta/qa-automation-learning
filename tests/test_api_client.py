@@ -1,6 +1,9 @@
 import pytest
 import requests
 import requests_mock
+from jsonschema import validate
+from schemas.profile_schema import PROFILE_SCHEMA
+from jsonschema.exceptions import ValidationError
 from tests.conftest import api_base_url, api_session
 from utils.api_client import get_user_by_id, get_posts_by_user_id, get_posts_page, get_private_profile
 
@@ -431,3 +434,116 @@ def test_get_private_profile_raises_http_error_when_access_is_forbidden(
         get_private_profile(api_session, api_base_url, token=token)
 
     assert exc_info.value.response.status_code == 403, "Expected a 403 Forbidden status code when access is forbidden"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_private_profile_matches_schema(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/profile"
+    token = "token-123"
+
+    mock_response = {
+        "id": 1,
+        "username": "testuser",
+        "role": "user"
+    }
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    profile = get_private_profile(api_session, api_base_url, token=token)
+    validate(instance=profile, schema=PROFILE_SCHEMA)
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_profile_schema_rejects_missing_role(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/profile"
+    token = "token-123"
+
+    mock_response = {
+        "id": 1,
+        "username": "testuser"
+    }
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    profile = get_private_profile(api_session, api_base_url, token=token)
+    with pytest.raises(ValidationError) as exc_info:
+        validate(instance=profile, schema=PROFILE_SCHEMA)
+        
+    assert exc_info.value.validator == "required", "Expected the 'required' validator to be triggered for missing role"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_profile_schema_rejects_invalid_id_type(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/profile"
+    token = "token-123"
+
+    mock_response = {
+        "id": "1",
+        "username": "testuser",
+        "role": "user"
+    }
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    profile = get_private_profile(api_session, api_base_url, token=token)
+    with pytest.raises(ValidationError) as exc_info:
+        validate(instance=profile, schema=PROFILE_SCHEMA)
+
+    assert exc_info.value.validator == "type", "Expected the 'type' validator to be triggered for invalid id type"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_profile_schema_rejects_unexpected_property(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/profile"
+    token = "token-123"
+
+    mock_response = {
+        "id": 1,
+        "username": "testuser",
+        "role": "user",
+        "password": "should-not-be-returned"
+    }
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    profile = get_private_profile(api_session, api_base_url, token=token)
+    with pytest.raises(ValidationError) as exc_info:
+        validate(instance=profile, schema=PROFILE_SCHEMA)
+
+    assert exc_info.value.validator == "additionalProperties", "Expected the 'additionalProperties' validator to be triggered for unexpected property"

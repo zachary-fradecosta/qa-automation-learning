@@ -59,6 +59,10 @@ qa-automation-learning/
 │   ├── pytest.md
 │   └── python-project.md
 │
+├── schemas/
+│   ├── __init__.py
+│   └── profile_schema.py                     # JSON Schema for profile responses
+│
 ├── scripts/                                    # Standalone learning demonstrations
 │   ├── day04_demo.py
 │   ├── api_client.py                            # Reusable API client functions
@@ -131,7 +135,7 @@ These guides are updated as new tools and QA Automation concepts are learned.
 
 **Chapter 4 — API Test Architecture**
 
-Progress: Day 28 of 32
+Progress: Day 29 of 32
 
 Current topics:
 
@@ -143,6 +147,7 @@ Current topics:
 - Timeouts and connection errors
 - Query parameters and pagination
 - Bearer token authentication
+- JSON Schema response validation
 
 ---
 

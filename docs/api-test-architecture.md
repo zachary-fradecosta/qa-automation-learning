@@ -331,3 +331,34 @@ assert requests_mock.last_request.headers.get(
 ```
 
 Error scenarios can then simulate `401 Unauthorized` and `403 Forbidden` responses without introducing real credentials or depending on an external authentication service.
+
+
+
+## Organizing JSON Schemas
+
+Reusable response contracts should be stored outside individual test files:
+
+```text
+schemas/
+├── __init__.py
+└── profile_schema.py
+```
+
+Tests can import the contract directly:
+
+```python
+from schemas.profile_schema import PROFILE_SCHEMA
+```
+
+Keeping schemas separate provides one source of truth for the response structure and prevents multiple test files from duplicating field and type definitions.
+
+Schema tests should cover both valid and invalid responses:
+
+```text
+Valid response
+Missing required property
+Invalid property type
+Unexpected property
+```
+
+A negative schema test should verify the specific validator that failed instead of only checking that some validation error occurred.

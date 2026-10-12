@@ -158,3 +158,64 @@ assert exc_info.value.response.status_code == 401
 ```
 
 Tests should preserve the distinction between `401` and `403` because they represent different causes and require different corrective actions.
+
+
+
+## JSON Schema Validation
+
+Individual assertions are useful for business values, but JSON Schema provides a centralized contract for the complete response structure.
+
+A schema can define required fields, expected types, and whether unexpected properties are accepted:
+
+```python
+PROFILE_SCHEMA = {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "id": {"type": "integer"},
+        "username": {"type": "string"},
+        "role": {"type": "string"},
+    },
+    "required": [
+        "id",
+        "username",
+        "role",
+    ],
+    "additionalProperties": False,
+}
+```
+
+The response can be validated with:
+
+```python
+from jsonschema import validate
+
+validate(
+    instance=response_data,
+    schema=PROFILE_SCHEMA,
+)
+```
+
+A conforming response completes without an exception. A response that violates the contract raises `jsonschema.exceptions.ValidationError`.
+
+Tests can inspect the rule that failed:
+
+```python
+with pytest.raises(ValidationError) as exc_info:
+    validate(
+        instance=invalid_response,
+        schema=PROFILE_SCHEMA,
+    )
+
+assert exc_info.value.validator == "required"
+```
+
+Common validator values include:
+
+```text
+required
+type
+additionalProperties
+```
+
+HTTP status assertions and schema validation should be used together because a `200 OK` response can still contain an invalid response body.

@@ -466,3 +466,21 @@ Authentication determines who the caller is, while authorization determines what
 
 ---
 
+### Day 29 — JSON Schema Validation
+
+#### What I learned
+
+- Created a reusable JSON Schema for an API profile response.
+- Declared required properties and their expected JSON types.
+- Rejected unexpected response properties with `additionalProperties`.
+- Validated a successful API response with `jsonschema`.
+- Tested missing required fields and invalid property types.
+- Inspected `ValidationError.validator` to identify the broken contract rule.
+- Learned that a successful HTTP status does not guarantee a valid response body.
+
+#### Key takeaway
+
+HTTP status validation and response contract validation cover different risks. An API can return `200 OK` while omitting a required field, changing a field type, or exposing an unexpected property. JSON Schema provides a reusable and centralized way to detect these contract regressions.
+
+---
+

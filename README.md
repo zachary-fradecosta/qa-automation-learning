@@ -109,39 +109,40 @@ These guides are updated as new tools and QA Automation concepts are learned.
 
 ---
 
-## 📈 Progress
+## 📈 Learning Progress
 
-| Day | Topic | Status |
-|-----|-------|--------|
-| 1 | Python fundamentals | ✅ |
-| 2 | Functions & filtering | ✅ |
-| 3 | JSON & test data | ✅ |
-| 4 | Modules & project architecture | ✅ |
-| 5 | Python assertions and first unit tests | ✅ |
-| 6 | Pytest - fixtures, conftest and parametrized tests | ✅ |
-| 7 | Pytest fundamentals and automated test execution | ✅ |
-| 8 | Pytest fixtures and parametrization | ✅ |
-| 9 | Pytest markers and test suite selection | ✅ |
-| 10 | Robust assertions and business rule validation | ✅ |
-| 11 | Negative scenarios and edge cases | ✅ |
-| 12 | Test data factories with Pytest fixtures | ✅ |
-| 13 | API testing fundamentals with Requests | ✅ |
-| 14 | API error responses and API markers | ✅ |
-| 15 | API response payload validation | ✅ |
-| 16 | API POST requests and resource creation | ✅ |
-| 17 | API PUT and PATCH requests | ✅ |
-| 18 | API DELETE requests and response contracts | ✅ |
-| 19 | Reusable API configuration with Pytest fixtures | ✅ |
-| 20 | Reusable HTTP sessions for API tests | ✅ |
-| 21 | HTTP headers and JSON API contracts | ✅ |
-| 22 | Safe API environment configuration | ✅ |
-| 23 | Mocked API client testing with requests-mock | ✅ |
-| 24 | HTTP error handling in the API client | ✅ |
-| 25 | Configurable API timeouts and network failures | ✅ |
-| 26 | API query parameters and filtered collections | ✅ |
-| 27 | API pagination and boundary validation | ✅ |
-| 28 | Bearer token authentication and authorization errors | ✅ |
-| 29 | [...] | ⏳ |
+| Chapter | Days | Main Topics | Status |
+|---|---:|---|---|
+| 1. Python and QA Foundations | 1–6 | Python basics, functions, JSON, modules, assertions and QA thinking | ✅ Completed |
+| 2. Pytest Fundamentals | 7–12 | Test discovery, fixtures, parametrization, markers, negative testing and factories | ✅ Completed |
+| 3. API Testing Fundamentals | 13–18 | GET, POST, PUT, PATCH, DELETE and response validation | ✅ Completed |
+| 4. API Test Architecture | 19–32 | Sessions, configuration, environments, mocks, error handling, timeouts, filtering, pagination and authentication | 🔄 In progress |
+| 5. Playwright Fundamentals | 33–42 | Browser automation, locators, actions, assertions and waiting strategies | ⏳ Planned |
+| 6. UI Test Architecture | 43–52 | Pytest fixtures, test data, Page Object Model and reusable components | ⏳ Planned |
+| 7. Advanced Playwright | 53–59 | Multiple pages, frames, downloads, uploads, network mocking and cross-browser testing | ⏳ Planned |
+| 8. API and UI Integration | 60–64 | API-based setup, UI verification and end-to-end workflows | ⏳ Planned |
+| 9. Test Reporting | 65–69 | HTML reports, Allure, screenshots, traces and test artifacts | ⏳ Planned |
+| 10. SQL for QA Automation | 70–75 | Queries, filters, joins, aggregations and database validation | ⏳ Planned |
+| 11. Framework Quality | 76–80 | Logging, secrets, linting, formatting, dependencies and flaky-test prevention | ⏳ Planned |
+| 12. CI/CD with GitHub Actions | 81–85 | Automated pipelines, markers, secrets, reports and artifacts | ⏳ Planned |
+| 13. Final Portfolio Project | 86–90 | Complete automation framework, documentation, CI/CD and final review | ⏳ Planned |
+
+### Current Focus
+
+**Chapter 4 — API Test Architecture**
+
+Progress: Day 28 of 32
+
+Current topics:
+
+- Reusable API client methods
+- Request sessions and shared headers
+- Environment configuration
+- API mocking
+- HTTP error handling
+- Timeouts and connection errors
+- Query parameters and pagination
+- Bearer token authentication
 
 ---
 

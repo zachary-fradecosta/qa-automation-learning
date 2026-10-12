@@ -2,7 +2,7 @@ import pytest
 import requests
 import requests_mock
 from tests.conftest import api_base_url, api_session
-from utils.api_client import get_user_by_id, get_posts_by_user_id, get_posts_page
+from utils.api_client import get_user_by_id, get_posts_by_user_id, get_posts_page, get_private_profile
 
 @pytest.mark.regression
 @pytest.mark.api
@@ -341,3 +341,93 @@ def test_get_posts_page_accepts_valid_boundaries(
     posts_page = get_posts_page(api_session, api_base_url, page=page, per_page=per_page)
     assert posts_page == mock_response, "Expected the posts page to match the mock response"
     assert requests_mock.called is True, "Expected the requests_mock to have been called"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_get_private_profile_returns_profile_for_valid_token(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/profile"
+    token = "test-token-123"
+    mock_response = {
+        "id": 1,
+        "username": "standard_user",
+        "role": "customer",
+    }
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+    profile = get_private_profile(api_session, api_base_url, token=token)
+    assert profile == mock_response, "Expected the profile to match the mock response"
+    assert profile["id"] == mock_response["id"], "Expected the profile ID to match the mock response"
+    assert profile["username"] == mock_response["username"], "Expected the profile username to match the mock response"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_get_private_profile_sends_bearer_token(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/profile"
+    token = "test-token-123"
+
+    requests_mock.get(
+        url,
+        json={},
+        status_code=200
+    )
+
+    get_private_profile(api_session, api_base_url, token=token)
+    request_headers = requests_mock.last_request.headers
+    assert request_headers.get("Authorization") == f"Bearer {token}", "Expected the Authorization header to contain the Bearer token"
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_get_private_profile_raises_http_error_for_invalid_token(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/profile"
+    token = "invalid-token-123"
+
+    requests_mock.get(
+        url,
+        json={"detail": "Invalid token."},
+        status_code=401
+    )
+
+    with pytest.raises(requests.exceptions.HTTPError) as exc_info:
+        get_private_profile(api_session, api_base_url, token=token) 
+
+    assert exc_info.value.response.status_code == 401, "Expected a 401 Unauthorized status code for an invalid token"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_get_private_profile_raises_http_error_when_access_is_forbidden(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/profile"
+    token = "forbidden-token-123"
+
+    requests_mock.get(
+        url,
+        json={"detail": "Access forbidden."},
+        status_code=403
+    )
+
+    with pytest.raises(requests.exceptions.HTTPError) as exc_info:
+        get_private_profile(api_session, api_base_url, token=token)
+
+    assert exc_info.value.response.status_code == 403, "Expected a 403 Forbidden status code when access is forbidden"

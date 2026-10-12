@@ -447,3 +447,22 @@ A collection test must verify both the returned data and the filter sent in the 
 Pagination tests must distinguish the maximum page size from the actual number of returned items. A final page may contain fewer items without indicating an API defect. Validating pagination inputs before sending a request also prevents unnecessary and invalid network calls.
 
 ---
+
+### Day 28 — Bearer Token Authentication
+
+#### What I learned
+
+- Added an authenticated API client method using a Bearer token.
+- Sent an `Authorization` header with an API request.
+- Inspected the headers actually sent by the client.
+- Tested a successful authenticated response with `requests-mock`.
+- Tested `401 Unauthorized` for an invalid token.
+- Tested `403 Forbidden` for an authenticated user without sufficient permissions.
+- Used fictional tokens to avoid exposing sensitive credentials.
+
+#### Key takeaway
+
+Authentication determines who the caller is, while authorization determines what the caller is allowed to do. A `401` response represents missing or invalid authentication, whereas a `403` response represents insufficient permissions for an authenticated caller.
+
+---
+

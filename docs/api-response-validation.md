@@ -132,3 +132,29 @@ assert response_data["next"] is None
 ```
 
 Tests should validate page content, total collection metadata, navigation metadata, and partial final pages according to the API contract.
+
+
+
+## Authentication and Authorization Errors
+
+Authentication and authorization failures normally represent different API behaviors:
+
+```text
+401 Unauthorized → authentication is missing or invalid
+403 Forbidden    → authentication succeeded, but permission is insufficient
+```
+
+When the API client calls `raise_for_status()`, Requests converts these unsuccessful responses into `HTTPError` exceptions. Tests can verify the original HTTP status through the exception response:
+
+```python
+with pytest.raises(requests.exceptions.HTTPError) as exc_info:
+    get_private_profile(
+        api_session,
+        api_base_url,
+        token=token,
+    )
+
+assert exc_info.value.response.status_code == 401
+```
+
+Tests should preserve the distinction between `401` and `403` because they represent different causes and require different corrective actions.

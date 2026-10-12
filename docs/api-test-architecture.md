@@ -301,3 +301,33 @@ def test_rejects_invalid_pagination(
 ```
 
 Each parametrized input appears as an independent Pytest case. Verifying `requests_mock.called is False` proves that invalid client input is rejected before a network request is attempted.
+
+
+
+## Mocking Authenticated API Endpoints
+
+Authentication behavior can be tested without using a real server or a real access token. `requests-mock` can simulate protected endpoints and control their responses:
+
+```python
+requests_mock.get(
+    f"{api_base_url}/profile",
+    json={"id": 1, "username": "standard_user"},
+    status_code=200,
+)
+```
+
+A focused test should separately verify the returned response and the authentication header sent by the client:
+
+```python
+get_private_profile(
+    api_session,
+    api_base_url,
+    token="test-token-123",
+)
+
+assert requests_mock.last_request.headers.get(
+    "Authorization"
+) == "Bearer test-token-123"
+```
+
+Error scenarios can then simulate `401 Unauthorized` and `403 Forbidden` responses without introducing real credentials or depending on an external authentication service.

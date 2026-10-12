@@ -140,7 +140,8 @@ These guides are updated as new tools and QA Automation concepts are learned.
 | 25 | Configurable API timeouts and network failures | ✅ |
 | 26 | API query parameters and filtered collections | ✅ |
 | 27 | API pagination and boundary validation | ✅ |
-| 28 | [...] | ⏳ |
+| 28 | Bearer token authentication and authorization errors | ✅ |
+| 29 | [...] | ⏳ |
 
 ---
 

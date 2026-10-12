@@ -46,3 +46,19 @@ def get_posts_page(
     response = api_session.get(url, params=params, timeout=timeout)
     response.raise_for_status()
     return response.json()
+
+
+def get_private_profile(
+    api_session,
+    api_base_url,
+    token,
+    timeout=10,
+):
+    url = f"{api_base_url}/profile"
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+
+    response = api_session.get(url, headers=headers, timeout=timeout)
+    response.raise_for_status()
+    return response.json()

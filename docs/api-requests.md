@@ -213,3 +213,37 @@ Requests builds a URL such as:
 ```
 
 Pagination parameter names depend on the API contract. Common alternatives include `page`, `page_size`, `limit`, `offset`, `_page`, and `_per_page`.
+
+
+
+## Bearer Token Authentication
+
+Protected API endpoints commonly expect an access token in the `Authorization` request header:
+
+```text
+Authorization: Bearer <token>
+```
+
+The client can send this header with Requests:
+
+```python
+headers = {
+    "Authorization": f"Bearer {token}"
+}
+
+response = api_session.get(
+    url,
+    headers=headers,
+    timeout=timeout,
+)
+```
+
+Tests can inspect the request intercepted by `requests-mock`:
+
+```python
+request_headers = requests_mock.last_request.headers
+
+assert request_headers.get("Authorization") == f"Bearer {token}"
+```
+
+Only fictional tokens should be committed to the repository. Real API tokens must be supplied through protected environment variables or CI secrets and must never appear in source code, documentation, test reports, or logs.

@@ -135,16 +135,18 @@ These guides are updated as new tools and QA Automation concepts are learned.
 
 **Chapter 4 — API Test Architecture**
 
-Progress: Day 29 of 32
+Progress: Day 30 of 32
 
 Current topics:
 
 - Reusable API client methods
+- Centralized API client class
 - Request sessions and shared headers
+- URL construction and normalization
 - Environment configuration
 - API mocking
 - HTTP error handling
-- Timeouts and connection errors
+- Default and custom timeouts
 - Query parameters and pagination
 - Bearer token authentication
 - JSON Schema response validation

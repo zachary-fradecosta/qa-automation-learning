@@ -362,3 +362,70 @@ Unexpected property
 ```
 
 A negative schema test should verify the specific validator that failed instead of only checking that some validation error occurred.
+
+
+
+
+## Reusable API Client
+
+A reusable API client can centralize configuration and common HTTP behavior:
+
+```python
+class APIClient:
+    def __init__(
+        self,
+        session,
+        base_url,
+        default_timeout=10,
+    ):
+        self.session = session
+        self.base_url = base_url.rstrip("/")
+        self.default_timeout = default_timeout
+```
+
+URL construction should normalize the base URL and endpoint path:
+
+```python
+def _build_url(self, path):
+    return f"{self.base_url}/{path.lstrip('/')}"
+```
+
+A generic `get()` method can forward request-specific options while preserving shared defaults:
+
+```python
+def get(
+    self,
+    path,
+    params=None,
+    headers=None,
+    timeout=None,
+):
+    url = self._build_url(path)
+
+    request_timeout = (
+        self.default_timeout
+        if timeout is None
+        else timeout
+    )
+
+    response = self.session.get(
+        url,
+        params=params,
+        headers=headers,
+        timeout=request_timeout,
+    )
+
+    response.raise_for_status()
+    return response
+```
+
+Returning the `Response` object keeps the generic client flexible. Specialized methods or tests can still inspect:
+
+```text
+response.status_code
+response.headers
+response.json()
+response.request
+```
+
+The client should be tested independently for URL construction, successful responses, forwarded query parameters, default and custom timeouts, and HTTP errors.

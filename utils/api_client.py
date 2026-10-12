@@ -62,3 +62,21 @@ def get_private_profile(
     response = api_session.get(url, headers=headers, timeout=timeout)
     response.raise_for_status()
     return response.json()
+
+
+class APIClient:
+    def __init__(self, session, base_url, default_timeout=10):
+        self.session = session
+        self.base_url = base_url.rstrip("/")
+        self.default_timeout = default_timeout
+
+    def _build_url(self, path):
+        return f"{self.base_url}/{path.lstrip('/')}"
+
+    def get(self, path, params=None, headers=None, timeout=None):
+        url = self._build_url(path)        
+        request_timeout = self.default_timeout if timeout is None else timeout
+
+        response = self.session.get(url, params=params, headers=headers, timeout=request_timeout)
+        response.raise_for_status()
+        return response

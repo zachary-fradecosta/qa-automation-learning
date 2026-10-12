@@ -6,6 +6,7 @@ from schemas.profile_schema import PROFILE_SCHEMA
 from jsonschema.exceptions import ValidationError
 from tests.conftest import api_base_url, api_session
 from utils.api_client import get_user_by_id, get_posts_by_user_id, get_posts_page, get_private_profile
+from utils.api_client import APIClient
 
 @pytest.mark.regression
 @pytest.mark.api
@@ -547,3 +548,100 @@ def test_profile_schema_rejects_unexpected_property(
         validate(instance=profile, schema=PROFILE_SCHEMA)
 
     assert exc_info.value.validator == "additionalProperties", "Expected the 'additionalProperties' validator to be triggered for unexpected property"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_api_client_get_returns_successful_response(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/users/1"
+    mock_response = {"key": "value"}
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )   
+
+    client = APIClient(api_session, api_base_url)
+    
+    response = client.get("/users/1")
+    assert response.status_code == 200
+    assert response.json() == mock_response
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_api_client_get_sends_query_parameters(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/posts"
+    mock_response = {}
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    client = APIClient(api_session, api_base_url)
+
+    client.get("/posts", params={"userId": 1})
+    query_params = requests_mock.last_request.qs
+
+    assert query_params.get("userid") == ["1"]
+
+
+@pytest.mark.parametrize(
+    "timeout, expected_timeout",
+    [
+        (None, 10),
+        (3, 3),
+    ],
+)
+@pytest.mark.regression
+@pytest.mark.api
+def test_api_client_get_uses_expected_timeout(
+    api_session,
+    api_base_url,
+    requests_mock,
+    timeout,
+    expected_timeout,
+):
+    url = f"{api_base_url}/users/1"
+    mock_response = {}
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    client = APIClient(api_session, api_base_url, default_timeout=10)
+    client.get("/users/1", timeout=timeout)
+
+    assert requests_mock.last_request.timeout == expected_timeout
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_api_client_get_raises_http_error_for_not_found(
+    api_session,
+    api_base_url,
+    requests_mock,
+):
+    url = f"{api_base_url}/users/99"
+    requests_mock.get(
+        url,
+        json={},
+        status_code=404
+    )
+
+    client = APIClient(api_session, api_base_url)
+    with pytest.raises(requests.exceptions.HTTPError) as exc_info:
+        client.get("/users/99")
+    assert exc_info.value.response.status_code == 404

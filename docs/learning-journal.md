@@ -484,3 +484,24 @@ HTTP status validation and response contract validation cover different risks. A
 
 ---
 
+### Day 30 — Reusable API Client Class
+
+#### What I learned
+
+- Created a reusable `APIClient` class.
+- Stored the HTTP session, base URL, and default timeout in an object.
+- Centralized API URL construction.
+- Normalized slashes between base URLs and endpoint paths.
+- Created a generic `get()` method.
+- Forwarded query parameters and headers to Requests.
+- Supported default and request-specific timeouts.
+- Tested successful responses, query parameters, timeouts, and HTTP errors.
+- Preserved the existing functional API client methods during the refactoring.
+
+#### Key takeaway
+
+A reusable API client centralizes shared HTTP behavior and prevents every endpoint function from rebuilding URLs, forwarding configuration, and handling errors independently. Refactoring should remain progressive so that existing tests continue to protect the current behavior.
+
+
+---
+

@@ -1,6 +1,7 @@
 import pytest
 from utils.json_loader import load_users
 from utils.api_config import get_api_base_url
+from utils.api_client import APIClient
 
 import truststore
 truststore.inject_into_ssl()
@@ -46,3 +47,8 @@ def api_session():
     session.headers.update({"Accept": "application/json"})
     yield session
     session.close()
+
+
+@pytest.fixture
+def api_client(api_session, api_base_url):
+    return APIClient(api_session, api_base_url)

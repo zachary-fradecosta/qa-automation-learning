@@ -429,3 +429,80 @@ response.request
 ```
 
 The client should be tested independently for URL construction, successful responses, forwarded query parameters, default and custom timeouts, and HTTP errors.
+
+
+
+
+## Injecting the API Client with Pytest
+
+A shared API client can be created in `tests/conftest.py`:
+
+```python
+from utils.api_client import APIClient
+
+@pytest.fixture
+def api_client(api_session, api_base_url):
+    return APIClient(
+        session=api_session,
+        base_url=api_base_url,
+    )
+```
+
+Tests request the fixture through their function parameters:
+
+```python
+def test_get_user(api_client):
+    user = api_client.get_user_by_id(1)
+```
+
+Fixtures defined in `conftest.py` should not be imported manually. Pytest discovers them automatically and resolves their dependencies.
+
+The dependency chain is:
+
+```text
+api_session
+      +
+api_base_url
+      ↓
+api_client
+      ↓
+test
+```
+
+## Generic and Specialized Client Methods
+
+The generic method manages HTTP behavior:
+
+```text
+get()
+├── URL construction
+├── query parameters
+├── headers
+├── timeout
+├── HTTP request
+└── raise_for_status()
+```
+
+Specialized methods describe API resources:
+
+```text
+get_user_by_id()
+get_posts_by_user_id()
+get_private_profile()
+```
+
+A specialized method should reuse the generic method:
+
+```python
+def get_user_by_id(self, user_id, timeout=None):
+    path = f"/users/{user_id}"
+
+    response = self.get(
+        path,
+        timeout=timeout,
+    )
+
+    return response.json()
+```
+
+This separation prevents resource methods from duplicating session handling, URL construction, timeout selection, and HTTP error handling.

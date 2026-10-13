@@ -553,7 +553,7 @@ def test_profile_schema_rejects_unexpected_property(
 @pytest.mark.regression
 @pytest.mark.api
 def test_api_client_get_returns_successful_response(
-    api_session,
+    api_client,
     api_base_url,
     requests_mock,
 ):
@@ -563,11 +563,9 @@ def test_api_client_get_returns_successful_response(
         url,
         json=mock_response,
         status_code=200
-    )   
-
-    client = APIClient(api_session, api_base_url)
+    ) 
     
-    response = client.get("/users/1")
+    response = api_client.get("/users/1")
     assert response.status_code == 200
     assert response.json() == mock_response
 
@@ -644,4 +642,88 @@ def test_api_client_get_raises_http_error_for_not_found(
     client = APIClient(api_session, api_base_url)
     with pytest.raises(requests.exceptions.HTTPError) as exc_info:
         client.get("/users/99")
+    assert exc_info.value.response.status_code == 404
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_api_client_get_user_by_id_returns_user(api_client, api_base_url, requests_mock):
+    url = f"{api_base_url}/users/1"
+    mock_response = {
+        "id": 1,
+        "name": "Test User",
+    }
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    user = api_client.get_user_by_id(1)
+    assert user == mock_response
+    assert user["id"] == 1
+    assert user["name"] == "Test User"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_api_client_get_posts_by_user_id_returns_filtered_posts(api_client, api_base_url, requests_mock):
+    url = f"{api_base_url}/posts"
+    mock_response = [
+        {"userId": 1, "id": 1, "title": "Post 1"},
+        {"userId": 1, "id": 2, "title": "Post 2"},
+    ]
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    posts = api_client.get_posts_by_user_id(1)
+    assert posts == mock_response
+    assert all(post["userId"] == 1 for post in posts)
+    
+    query_params = requests_mock.last_request.qs
+    assert query_params.get("userid") == ["1"]
+
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_api_client_get_private_profile_sends_bearer_token(api_client, api_base_url, requests_mock):
+    url = f"{api_base_url}/profile"
+    mock_response = {
+        "id": 1,
+        "username": "standard_user",
+        "role": "customer",
+    }
+
+    requests_mock.get(
+        url,
+        json=mock_response,
+        status_code=200
+    )
+
+    token = "test_token_123"
+    profile = api_client.get_private_profile(token)
+    assert profile == mock_response
+
+    headers = requests_mock.last_request.headers
+    assert headers.get("Authorization") == f"Bearer {token}"
+
+
+@pytest.mark.regression
+@pytest.mark.api
+def test_api_client_get_user_by_id_raises_http_error_for_not_found(api_client, api_base_url, requests_mock):
+    url = f"{api_base_url}/users/999"
+    requests_mock.get(
+        url,
+        json={},
+        status_code=404
+    )
+
+    with pytest.raises(requests.exceptions.HTTPError) as exc_info:
+        api_client.get_user_by_id(999)
     assert exc_info.value.response.status_code == 404

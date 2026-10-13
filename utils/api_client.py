@@ -80,3 +80,24 @@ class APIClient:
         response = self.session.get(url, params=params, headers=headers, timeout=request_timeout)
         response.raise_for_status()
         return response
+
+    def get_user_by_id(self, user_id, timeout=None):
+        path = f"/users/{user_id}"
+        response = self.get(path, timeout=timeout)
+        return response.json()
+
+    def get_posts_by_user_id(self, user_id, timeout=None):
+        path = "/posts"
+        params = {
+            "userId": user_id,
+        }
+        response = self.get(path, params=params, timeout=timeout)
+        return response.json()
+
+    def get_private_profile(self, token, timeout=None):
+        path = "/profile"
+        headers = {
+            "Authorization": f"Bearer {token}"
+        }
+        response = self.get(path, headers=headers, timeout=timeout)
+        return response.json()

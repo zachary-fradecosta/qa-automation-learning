@@ -133,14 +133,18 @@ These guides are updated as new tools and QA Automation concepts are learned.
 
 ### Current Focus
 
+### Current Focus
+
 **Chapter 4 — API Test Architecture**
 
-Progress: Day 30 of 32
+Progress: Day 31 of 32
 
 Current topics:
 
 - Reusable API client methods
 - Centralized API client class
+- Dependency injection with Pytest fixtures
+- Specialized API resource methods
 - Request sessions and shared headers
 - URL construction and normalization
 - Environment configuration

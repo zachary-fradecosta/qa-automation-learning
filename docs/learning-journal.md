@@ -505,3 +505,22 @@ A reusable API client centralizes shared HTTP behavior and prevents every endpoi
 
 ---
 
+### Day 31 — API Client Fixture and Resource Methods
+
+#### What I learned
+
+- Created a shared `api_client` Pytest fixture.
+- Injected an initialized API client directly into tests.
+- Learned that fixtures from `conftest.py` must not be imported manually.
+- Added specialized methods to the `APIClient` class.
+- Reused the generic `get()` method instead of duplicating HTTP logic.
+- Added methods for users, filtered posts, and authenticated profiles.
+- Tested response data, query parameters, authorization headers, and HTTP errors.
+- Continued migrating the API architecture without removing the existing functions.
+
+#### Key takeaway
+
+The generic client manages HTTP behavior, while specialized methods express business intent. Pytest fixtures centralize object creation and inject configured dependencies into tests without manual imports or repeated setup.
+
+---
+

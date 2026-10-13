@@ -101,13 +101,14 @@ qa-automation-learning/
 
 The `docs/` folder contains practical reference guides for the technologies and commands used in this project.
 
-- [API Requests Guide](docs/api-requests.md): HTTP methods, endpoints, payloads, and status codes.
-- [API Response Validation Guide](docs/api-response-validation.md): JSON validation, required fields, types, and HTTP headers.
-- [API Test Architecture Guide](docs/api-test-architecture.md): Fixtures, sessions, reusable API configuration, and safe environments.
-- [Pytest Guide](docs/pytest.md): Test execution, markers, and Pytest commands.
-- [Git and GitHub Guide](docs/git-and-github.md): Git workflow and GitHub commands.
-- [Python Project Guide](docs/python-project.md): Useful Python project commands.
-- [Learning Journal](docs/learning-journal.md): Daily learning notes, key takeaways, exercises, and progress.
+- [Documentation Index](docs/README.md)
+- [Daily Learning Journal](docs/learning-journal.md)
+- [Python Project Guide](docs/01-python-and-qa-foundations/python-project.md)
+- [Git and GitHub Guide](docs/01-python-and-qa-foundations/git-and-github.md)
+- [Pytest Guide](docs/02-pytest-fundamentals/pytest.md)
+- [API Requests Guide](docs/03-api-testing-fundamentals/api-requests.md)
+- [API Response Validation Guide](docs/03-api-testing-fundamentals/api-response-validation.md)
+- [API Test Architecture Guide](docs/04-api-test-architecture/api-test-architecture.md)
 
 These guides are updated as new tools and QA Automation concepts are learned.
 

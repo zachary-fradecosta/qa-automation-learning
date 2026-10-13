@@ -506,3 +506,64 @@ def get_user_by_id(self, user_id, timeout=None):
 ```
 
 This separation prevents resource methods from duplicating session handling, URL construction, timeout selection, and HTTP error handling.
+
+
+
+## Complete API Test Architecture
+
+The completed API framework follows this dependency flow:
+
+```text
+Environment configuration
+        ↓
+api_base_url fixture
+        ↓
+api_session fixture
+        ↓
+api_client fixture
+        ↓
+APIClient generic HTTP methods
+        ↓
+Specialized resource methods
+        ↓
+Response data
+        ↓
+Business assertions and JSON Schema
+        ↓
+Pytest result
+```
+
+Each layer has a separate responsibility:
+
+```text
+api_config.py
+└── selects an authorized environment
+
+conftest.py
+├── loads shared test data
+├── creates the HTTP session
+└── injects the configured API client
+
+APIClient.get()
+├── constructs URLs
+├── forwards query parameters and headers
+├── applies timeouts
+├── sends HTTP requests
+└── raises HTTP errors
+
+Specialized methods
+├── get_user_by_id()
+├── get_posts_by_user_id()
+└── get_private_profile()
+
+JSON Schema
+└── validates complete response contracts
+
+Tests
+├── validate returned data
+├── inspect outgoing requests
+├── simulate errors
+└── verify business behavior
+```
+
+Mocks validate the client against a controlled contract, while live integration tests validate the behavior of a real deployed API. Both approaches cover different risks and should not be confused.

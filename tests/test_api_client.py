@@ -440,7 +440,7 @@ def test_get_private_profile_raises_http_error_when_access_is_forbidden(
 @pytest.mark.regression
 @pytest.mark.api
 def test_private_profile_matches_schema(
-    api_session,
+    api_client,
     api_base_url,
     requests_mock,
 ):
@@ -459,7 +459,7 @@ def test_private_profile_matches_schema(
         status_code=200
     )
 
-    profile = get_private_profile(api_session, api_base_url, token=token)
+    profile = api_client.get_private_profile(token)
     validate(instance=profile, schema=PROFILE_SCHEMA)
 
 

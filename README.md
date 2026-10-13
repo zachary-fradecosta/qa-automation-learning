@@ -120,7 +120,7 @@ These guides are updated as new tools and QA Automation concepts are learned.
 | 1. Python and QA Foundations | 1–6 | Python basics, functions, JSON, modules, assertions and QA thinking | ✅ Completed |
 | 2. Pytest Fundamentals | 7–12 | Test discovery, fixtures, parametrization, markers, negative testing and factories | ✅ Completed |
 | 3. API Testing Fundamentals | 13–18 | GET, POST, PUT, PATCH, DELETE and response validation | ✅ Completed |
-| 4. API Test Architecture | 19–32 | Sessions, configuration, environments, mocks, error handling, timeouts, filtering, pagination and authentication | 🔄 In progress |
+| 4. API Test Architecture | 19–32 | Sessions, configuration, environments, mocks, error handling, timeouts, filtering, pagination, authentication, JSON Schema and reusable API clients | ✅ Completed |
 | 5. Playwright Fundamentals | 33–42 | Browser automation, locators, actions, assertions and waiting strategies | ⏳ Planned |
 | 6. UI Test Architecture | 43–52 | Pytest fixtures, test data, Page Object Model and reusable components | ⏳ Planned |
 | 7. Advanced Playwright | 53–59 | Multiple pages, frames, downloads, uploads, network mocking and cross-browser testing | ⏳ Planned |
@@ -133,27 +133,21 @@ These guides are updated as new tools and QA Automation concepts are learned.
 
 ### Current Focus
 
-### Current Focus
+**Chapter 5 — Playwright Fundamentals**
 
-**Chapter 4 — API Test Architecture**
+Progress: Starts on Day 33
 
-Progress: Day 31 of 32
+Upcoming topics:
 
-Current topics:
-
-- Reusable API client methods
-- Centralized API client class
-- Dependency injection with Pytest fixtures
-- Specialized API resource methods
-- Request sessions and shared headers
-- URL construction and normalization
-- Environment configuration
-- API mocking
-- HTTP error handling
-- Default and custom timeouts
-- Query parameters and pagination
-- Bearer token authentication
-- JSON Schema response validation
+- Playwright installation and browser setup
+- Browser, context, and page objects
+- Web navigation
+- Locators and element selection
+- User actions
+- UI assertions
+- Automatic waiting
+- Login and form scenarios
+- Screenshots and traces
 
 ---
 

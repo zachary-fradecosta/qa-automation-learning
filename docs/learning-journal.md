@@ -524,3 +524,42 @@ The generic client manages HTTP behavior, while specialized methods express busi
 
 ---
 
+### Day 32 — API Architecture Chapter Review
+
+#### What I practiced
+
+- Migrated an existing schema test to the shared `api_client` fixture.
+- Reviewed the complete request flow through the API framework.
+- Reviewed HTTP methods, status codes, query parameters, sessions, and fixtures.
+- Reviewed API mocking, network errors, timeouts, and pagination.
+- Reviewed Bearer token authentication and authorization errors.
+- Reviewed JSON Schema validation.
+- Reviewed the separation between generic HTTP methods and specialized resource methods.
+
+#### Chapter assessment
+
+- QCM score: **14/15 — 93%**
+- Chapter status: **Completed**
+- Tests: **61 passed**
+- API tests selected: **50**
+
+#### Strengths
+
+- HTTP methods and status codes
+- Pytest fixtures and dependency injection
+- API mocking
+- HTTP and network error handling
+- Pagination and query parameters
+- JSON Schema validation
+- Reusable API client architecture
+
+#### Point to consolidate
+
+Real credentials must be supplied through protected environment variables or CI secrets. They must never be committed to Git or exposed in documentation and logs.
+
+#### Key takeaway
+
+A maintainable API automation framework separates configuration, HTTP transport, resource-specific behavior, response contracts, and tests. Each layer has one responsibility and can be tested independently.
+
+---
+

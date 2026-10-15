@@ -563,3 +563,24 @@ A maintainable API automation framework separates configuration, HTTP transport,
 
 ---
 
+### Day 33 — First Playwright UI Tests
+
+#### What I learned
+
+- Installed Playwright and its Pytest plugin.
+- Installed Chromium for browser automation.
+- Used the Playwright `page` fixture.
+- Navigated to a web page with `page.goto()`.
+- Located elements by accessible role and name.
+- Used web-first assertions to validate titles, headings, links, attributes, and URLs.
+- Automated a user journey by clicking a link and validating the destination page.
+- Learned why Playwright assertions are more reliable than fixed waits.
+
+#### Key takeaway
+
+Playwright can reproduce user interactions in a real browser and validate the resulting interface. Its accessible locators and automatically retried assertions make UI tests more reliable than scripts based on fixed waiting times.
+
+
+---
+
+

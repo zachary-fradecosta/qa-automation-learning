@@ -26,6 +26,10 @@ The documentation is organized by learning chapter so that each topic can be rev
 
 - [API Test Architecture Guide](04-api-test-architecture/api-test-architecture.md)
 
+## Chapter 5 — Playwright Fundamentals
+
+- [Playwright Fundamentals](05-playwright-fundamentals/playwright.md)
+
 ## Upcoming Chapters
 
 Documentation for the following chapters will be added as the learning journey progresses:

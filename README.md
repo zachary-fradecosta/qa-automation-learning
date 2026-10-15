@@ -80,6 +80,8 @@ qa-automation-learning/
 │   ├── test_api_users.py
 │   ├── test_statistics.py
 │   └── test_user_helpers.py
+│   └── ui/
+│       └── test_playwright_homepage.py
 │
 ├── utils/                                      # Application helper functions
 │   ├── api_config.py                           # Safe API environment configuration
@@ -109,6 +111,7 @@ The `docs/` folder contains practical reference guides for the technologies and 
 - [API Requests Guide](docs/03-api-testing-fundamentals/api-requests.md)
 - [API Response Validation Guide](docs/03-api-testing-fundamentals/api-response-validation.md)
 - [API Test Architecture Guide](docs/04-api-test-architecture/api-test-architecture.md)
+- [Playwright Fundamentals](docs/05-playwright-fundamentals/playwright.md)
 
 These guides are updated as new tools and QA Automation concepts are learned.
 
@@ -136,19 +139,16 @@ These guides are updated as new tools and QA Automation concepts are learned.
 
 **Chapter 5 — Playwright Fundamentals**
 
-Progress: Starts on Day 33
+Progress: Day 33 of 42
 
-Upcoming topics:
+Current topics:
 
-- Playwright installation and browser setup
-- Browser, context, and page objects
-- Web navigation
-- Locators and element selection
-- User actions
-- UI assertions
-- Automatic waiting
-- Login and form scenarios
-- Screenshots and traces
+- Playwright installation and Chromium setup
+- Browser, context, and page concepts
+- Page navigation
+- Accessible locators
+- Web-first UI assertions
+- Headless and headed execution
 
 ---
 

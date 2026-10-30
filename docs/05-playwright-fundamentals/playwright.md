@@ -154,3 +154,98 @@ pytest tests/ui/test_playwright_homepage.py --browser chromium -v
 ## Key takeaway
 
 A Playwright test reproduces a user interaction in a browser and verifies the resulting UI behavior. Accessible locators and web-first assertions make browser tests clearer and more reliable.
+
+
+## Form interactions
+
+Fill an input field:
+
+```python
+todo_input.fill("Learn Playwright")
+```
+
+Send a keyboard key:
+
+```python
+todo_input.press("Enter")
+```
+
+Verify the current value:
+
+```python
+expect(todo_input).to_have_value("Learn Playwright")
+```
+
+Verify that the field was cleared:
+
+```python
+expect(todo_input).to_have_value("")
+```
+
+## Locator collections
+
+A locator can represent multiple matching elements:
+
+```python
+todo_items = page.get_by_test_id("todo-item")
+```
+
+Verify the number of matching elements:
+
+```python
+expect(todo_items).to_have_count(2)
+```
+
+## Filtering a locator collection
+
+Filter a collection by its displayed text:
+
+```python
+todo_item = todo_items.filter(has_text="Write UI tests")
+```
+
+This first identifies all Todo items and then selects the one containing the expected text.
+
+## Locating an element inside another element
+
+Once the correct Todo item has been found, locate its checkbox:
+
+```python
+todo_checkbox = todo_item.get_by_role("checkbox")
+```
+
+This is more robust and expressive than searching for every checkbox on the page.
+
+## Checkbox interactions
+
+Check a checkbox:
+
+```python
+todo_checkbox.check()
+```
+
+Verify its state:
+
+```python
+expect(todo_checkbox).to_be_checked()
+```
+
+## Exact text matching
+
+By default, a text locator may match a longer string containing the expected text.
+
+Use `exact=True` when the complete text must match:
+
+```python
+todo_item = page.get_by_text("Learn Playwright", exact=True)
+```
+
+## Locator strictness
+
+Playwright generally expects an action locator to resolve to one element.
+
+If a locator matches several elements, Playwright fails instead of silently interacting with an arbitrary element. A collection should therefore be filtered before performing an action on one specific element.
+
+## Key takeaway
+
+A robust UI test first identifies a meaningful element or collection, narrows the locator when necessary, performs a user action, and validates the resulting behavior with a web-first assertion.

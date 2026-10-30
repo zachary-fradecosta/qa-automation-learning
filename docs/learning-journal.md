@@ -583,4 +583,24 @@ Playwright can reproduce user interactions in a real browser and validate the re
 
 ---
 
+### Day 34 — Playwright Locators and UI Interactions
+
+#### What I learned
+
+- Centralized the TodoMVC application URL in the test module.
+- Located elements by accessible role, placeholder, text, and test ID.
+- Used `fill()` to enter text into an input field.
+- Used `press("Enter")` to reproduce a keyboard interaction.
+- Verified input values with Playwright assertions.
+- Created and validated multiple Todo items.
+- Used locator collections and `to_have_count()`.
+- Filtered a locator collection to target one specific item.
+- Located and checked a checkbox inside a Todo item.
+- Learned why precise locators are important when several elements match.
+
+#### Key takeaway
+
+A Playwright locator can represent either one element or a collection. Before interacting with one element from a collection, the locator should be narrowed using meaningful information such as visible text.
+
+---
 

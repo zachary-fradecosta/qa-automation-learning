@@ -82,6 +82,7 @@ qa-automation-learning/
 │   └── test_user_helpers.py
 │   └── ui/
 │       └── test_playwright_homepage.py
+│       └── test_todo_app.py
 │
 ├── utils/                                      # Application helper functions
 │   ├── api_config.py                           # Safe API environment configuration
@@ -139,16 +140,18 @@ These guides are updated as new tools and QA Automation concepts are learned.
 
 **Chapter 5 — Playwright Fundamentals**
 
-Progress: Day 33 of 42
+Progress: 2 of 10 chapter days completed
 
 Current topics:
 
-- Playwright installation and Chromium setup
-- Browser, context, and page concepts
-- Page navigation
-- Accessible locators
-- Web-first UI assertions
-- Headless and headed execution
+- Playwright browser navigation
+- Accessible and user-facing locators
+- Form and keyboard interactions
+- Locator collections
+- Locator filtering
+- Web-first assertions
+- Checkbox interactions
+- Smoke and regression UI tests
 
 ---
 

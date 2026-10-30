@@ -79,9 +79,10 @@ qa-automation-learning/
 │   ├── test_api_session.py                     
 │   ├── test_api_users.py
 │   ├── test_statistics.py
-│   └── test_user_helpers.py
+│   ├── test_user_helpers.py
 │   └── ui/
-│       └── test_playwright_homepage.py
+│       ├── conftest.py
+│       ├── test_playwright_homepage.py
 │       └── test_todo_app.py
 │
 ├── utils/                                      # Application helper functions
@@ -140,18 +141,18 @@ These guides are updated as new tools and QA Automation concepts are learned.
 
 **Chapter 5 — Playwright Fundamentals**
 
-Progress: 2 of 10 chapter days completed
+Progress: 3 of 10 chapter days completed
 
 Current topics:
 
-- Playwright browser navigation
-- Accessible and user-facing locators
+- Browser navigation and accessible locators
 - Form and keyboard interactions
-- Locator collections
-- Locator filtering
-- Web-first assertions
-- Checkbox interactions
-- Smoke and regression UI tests
+- Locator collections and filtering
+- Custom Playwright fixtures
+- Pytest fixture discovery
+- Browser-context isolation
+- Hash-based routing
+- State persistence after page reload
 
 ---
 

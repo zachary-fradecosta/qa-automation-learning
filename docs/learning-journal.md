@@ -604,3 +604,24 @@ A Playwright locator can represent either one element or a collection. Before in
 
 ---
 
+### Day 35 — Playwright Fixtures and Test Isolation
+
+#### What I learned
+
+- Created a UI-specific `conftest.py`.
+- Built a custom `todo_page` fixture from Playwright's `page` fixture.
+- Learned that fixtures from `conftest.py` must not be imported manually.
+- Centralized TodoMVC navigation outside the test functions.
+- Refactored UI tests to receive a prepared page.
+- Kept business actions visible inside each test.
+- Verified that every test starts with an isolated browser context.
+- Learned how hash-based routing changes the visible page URL.
+- Used `reload()` to verify local-storage persistence.
+- Rebuilt locators after reloading the page.
+
+#### Key takeaway
+
+Playwright creates an isolated browser context for each test. Custom fixtures can centralize technical setup without hiding the business behavior being tested.
+
+---
+

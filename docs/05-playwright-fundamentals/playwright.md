@@ -249,3 +249,124 @@ If a locator matches several elements, Playwright fails instead of silently inte
 ## Key takeaway
 
 A robust UI test first identifies a meaningful element or collection, narrows the locator when necessary, performs a user action, and validates the resulting behavior with a web-first assertion.
+
+## Playwright Pytest fixtures
+
+The Playwright Pytest plugin provides several fixtures:
+
+- `browser`: the browser process used by the tests;
+- `context`: an isolated browser profile;
+- `page`: a browser tab belonging to an isolated context.
+
+The `page` and `context` fixtures are created for each test. This prevents cookies, sessions, and local storage from leaking between tests.
+
+## Custom UI fixtures
+
+A custom fixture can depend on Playwright's `page` fixture:
+
+```python
+import pytest
+from playwright.sync_api import Page
+
+
+TODO_APP_URL = "https://demo.playwright.dev/todomvc/"
+
+
+@pytest.fixture
+def todo_page(page: Page):
+    page.goto(TODO_APP_URL)
+    return page
+```
+
+A test requests the fixture by using its name as a parameter:
+
+```python
+def test_todo_page(todo_page: Page):
+    pass
+```
+
+Fixtures declared in `conftest.py` must not be imported manually. Pytest discovers and injects them automatically.
+
+## Local fixture scope
+
+A fixture placed in:
+
+```text
+tests/ui/conftest.py
+```
+
+is available to tests located under `tests/ui/`.
+
+This keeps UI-specific fixtures separate from API and unit-test fixtures.
+
+## Technical setup and business actions
+
+Fixtures should centralize stable technical preparation such as:
+
+- opening the application;
+- configuring the browser context;
+- preparing an environment.
+
+Business actions should normally remain visible inside the test, such as:
+
+- creating a Todo item;
+- completing a task;
+- submitting a form.
+
+This keeps the tested behavior easy to understand.
+
+## Browser isolation
+
+Each Playwright test receives an isolated browser context:
+
+```text
+Browser
+├── Context for test A
+│   └── Page
+└── Context for test B
+    └── Page
+```
+
+Data created in one test should not affect another test.
+
+## Reloading a page
+
+Reload the current page with:
+
+```python
+page.reload()
+```
+
+A reload keeps the same browser context. Cookies and local storage therefore remain available during the same test.
+
+After a reload, rebuild the locators used for the final assertions:
+
+```python
+page.reload()
+
+todo_items = page.get_by_test_id("todo-item")
+todo_item = todo_items.filter(has_text="Persistent UI task")
+todo_checkbox = todo_item.get_by_role("checkbox")
+
+expect(todo_checkbox).to_be_checked()
+```
+
+## Hash-based routing
+
+Some single-page applications use a URL fragment:
+
+```text
+https://example.com/application/#/
+```
+
+The fragment is used by client-side routing. A regular expression can accept the application URL with or without that fragment:
+
+```python
+expect(page).to_have_url(
+    re.compile(r".*/todomvc/(?:#/)?$")
+)
+```
+
+## Key takeaway
+
+A custom UI fixture removes duplicated technical preparation while Playwright's isolated browser contexts keep tests independent. Reloading a page preserves state inside the current test but that state must not leak into another test.

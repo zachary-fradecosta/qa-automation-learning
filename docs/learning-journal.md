@@ -625,3 +625,24 @@ Playwright creates an isolated browser context for each test. Custom fixtures ca
 
 ---
 
+### Day 36 — UI Base URL and Environment Safety
+
+#### What I learned
+
+- Configured the Playwright base URL in `pytest.ini`.
+- Replaced absolute navigation URLs with relative application paths.
+- Used the `base_url` fixture provided by the Pytest plugin.
+- Learned how command-line options and environment variables can override the configured URL.
+- Parsed URLs with Python's `urlparse()`.
+- Validated URL schemes, hostnames, paths, and fragments separately.
+- Added an explicit allowlist of authorized UI environments.
+- Created a session-scoped automatic fixture.
+- Blocked unsafe environments before browser navigation.
+- Verified that the complete test suite still passes.
+
+#### Key takeaway
+
+A configurable base URL makes UI tests reusable across environments, but configuration alone is not a safety mechanism. An explicit hostname allowlist protects the framework from accidentally targeting an unauthorized environment.
+
+---
+

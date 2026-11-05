@@ -370,3 +370,150 @@ expect(page).to_have_url(
 ## Key takeaway
 
 A custom UI fixture removes duplicated technical preparation while Playwright's isolated browser contexts keep tests independent. Reloading a page preserves state inside the current test but that state must not leak into another test.
+
+
+## Configuring a base URL
+
+The Playwright Pytest plugin supports a configurable base URL through `pytest-base-url`.
+
+Add the application origin to `pytest.ini`:
+
+```ini
+[pytest]
+base_url = https://demo.playwright.dev
+```
+
+Tests and fixtures can then navigate with relative paths:
+
+```python
+page.goto("/todomvc/")
+```
+
+Playwright resolves the final address:
+
+```text
+Base URL: https://demo.playwright.dev
+Path:     /todomvc/
+Result:   https://demo.playwright.dev/todomvc/
+```
+
+## Overriding the environment
+
+Override the configured base URL from the command line:
+
+```powershell
+pytest -m ui --base-url https://test.example.com
+```
+
+It can also be provided through an environment variable:
+
+```powershell
+$env:PYTEST_BASE_URL = "https://test.example.com"
+pytest -m ui
+```
+
+Remove the PowerShell environment variable after use:
+
+```powershell
+Remove-Item Env:PYTEST_BASE_URL
+```
+
+The configuration priority is:
+
+```text
+--base-url command-line option
+        ↓
+PYTEST_BASE_URL environment variable
+        ↓
+base_url from pytest.ini
+```
+
+## Inspecting URLs
+
+Use the Python standard library to inspect the different parts of a URL:
+
+```python
+from urllib.parse import urlparse
+
+
+parsed_url = urlparse("https://demo.playwright.dev/todomvc/#/")
+```
+
+Available properties include:
+
+```python
+parsed_url.scheme
+parsed_url.hostname
+parsed_url.path
+parsed_url.fragment
+```
+
+For this URL, the values are:
+
+```text
+scheme   = https
+hostname = demo.playwright.dev
+path     = /todomvc/
+fragment = /
+```
+
+Prefer `hostname` over `netloc` when validating a domain because `netloc` may also contain a port or authentication information.
+
+## Protecting test environments
+
+A base URL only selects an address. It does not know whether that address represents test, staging, or production.
+
+Use an explicit allowlist:
+
+```python
+ALLOWED_UI_HOSTS = {
+    "demo.playwright.dev",
+}
+```
+
+A session-scoped automatic fixture can validate the target before UI tests start:
+
+```python
+@pytest.fixture(scope="session", autouse=True)
+def validate_ui_environment(base_url):
+    parsed_url = urlparse(base_url)
+
+    if parsed_url.hostname not in ALLOWED_UI_HOSTS:
+        pytest.fail(
+            f"Unsafe UI environment: "
+            f"{parsed_url.hostname} is not allowed"
+        )
+```
+
+Because this fixture does not request `page`, it can reject an unsafe environment before Playwright opens a browser page.
+
+## Automatic fixtures
+
+A fixture marked with `autouse=True` executes even when it is not listed in the test signature:
+
+```python
+@pytest.fixture(scope="session", autouse=True)
+def validate_environment():
+    ...
+```
+
+Automatic fixtures should be used carefully because their execution is less visible. They are appropriate for mandatory framework-wide protections that must not be forgotten by individual tests.
+
+## Testing URL resolution
+
+The configured and actual URLs can be compared by component:
+
+```python
+configured_url = urlparse(base_url)
+current_url = urlparse(todo_page.url)
+
+assert current_url.scheme == configured_url.scheme
+assert current_url.hostname == configured_url.hostname
+assert current_url.path == "/todomvc/"
+```
+
+This avoids fragile comparisons with client-side URL fragments such as `#/`.
+
+## Key takeaway
+
+Separating the base URL from application routes allows the same tests to target different environments. An explicit hostname allowlist prevents a configuration mistake from silently running UI tests against an unsafe environment.

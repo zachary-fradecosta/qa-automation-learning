@@ -1,6 +1,6 @@
-import pytest, re
+import pytest
 from playwright.sync_api import Page, expect
-
+from urllib.parse import urlparse
 
 
 
@@ -82,10 +82,14 @@ def test_user_can_complete_todo(todo_page: Page):
 
 @pytest.mark.ui
 @pytest.mark.regression
-def test_todo_page_starts_with_empty_list(todo_page: Page):
-    expect(todo_page).to_have_url(
-        re.compile(r".*/todomvc/(?:#/)?$")
-    )
+def test_todo_page_starts_with_empty_list(base_url, todo_page: Page):
+    configured_url = urlparse(base_url)
+    current_url = urlparse(todo_page.url)
+    
+    assert current_url.path == "/todomvc/"
+    assert configured_url.scheme == current_url.scheme
+    assert configured_url.hostname == current_url.hostname
+
     todo_items = todo_page.get_by_test_id("todo-item")
     expect(todo_items).to_have_count(0)
 

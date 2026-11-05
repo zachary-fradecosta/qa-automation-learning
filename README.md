@@ -83,7 +83,8 @@ qa-automation-learning/
 │   └── ui/
 │       ├── conftest.py
 │       ├── test_playwright_homepage.py
-│       └── test_todo_app.py
+│       ├── test_todo_app.py
+│       └── test_ui_config.py
 │
 ├── utils/                                      # Application helper functions
 │   ├── api_config.py                           # Safe API environment configuration
@@ -141,7 +142,7 @@ These guides are updated as new tools and QA Automation concepts are learned.
 
 **Chapter 5 — Playwright Fundamentals**
 
-Progress: 3 of 10 chapter days completed
+Progress: 4 of 10 chapter days completed
 
 Current topics:
 
@@ -149,10 +150,12 @@ Current topics:
 - Form and keyboard interactions
 - Locator collections and filtering
 - Custom Playwright fixtures
-- Pytest fixture discovery
 - Browser-context isolation
-- Hash-based routing
-- State persistence after page reload
+- Configurable UI base URLs
+- Relative navigation
+- URL component validation
+- Environment allowlists
+- Automatic safety fixtures
 
 ---
 

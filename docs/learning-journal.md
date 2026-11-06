@@ -646,3 +646,24 @@ A configurable base URL makes UI tests reusable across environments, but configu
 
 ---
 
+### Day 37 — UI State Transitions and Todo Filters
+
+#### What I learned
+
+- Tested UI behavior across several related states.
+- Verified checked and unchecked checkbox states.
+- Validated the TodoMVC active-item counter.
+- Used accessible links to apply Active and Completed filters.
+- Verified client-side URL fragments after filter navigation.
+- Learned that Playwright locators are evaluated against the current DOM.
+- Distinguished hidden elements from absent elements.
+- Used `to_have_count(0)` to prove that a filtered item was absent.
+- Verified that Clear completed removes only completed tasks.
+- Added non-regression assertions for data that must remain present.
+
+#### Key takeaway
+
+A robust UI test validates the complete business result of an action. It checks the correct control state, displayed data, counter, and route while also protecting unaffected data from regression.
+
+---
+

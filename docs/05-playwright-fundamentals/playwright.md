@@ -517,3 +517,143 @@ This avoids fragile comparisons with client-side URL fragments such as `#/`.
 ## Key takeaway
 
 Separating the base URL from application routes allows the same tests to target different environments. An explicit hostname allowlist prevents a configuration mistake from silently running UI tests against an unsafe environment.
+
+
+## Testing UI state transitions
+
+A user action can update several parts of an interface:
+
+```text
+User action
+    ├── Element state
+    ├── Displayed collection
+    ├── Business counter
+    └── Application URL
+```
+
+A robust test validates the relevant business consequences rather than checking only that the action was performed.
+
+## Checked and unchecked states
+
+Verify that a checkbox is checked:
+
+```python
+expect(todo_checkbox).to_be_checked()
+```
+
+Verify that it is not checked:
+
+```python
+expect(todo_checkbox).not_to_be_checked()
+```
+
+The assertion must target the checkbox locator, not its parent Todo item.
+
+## Business counters
+
+TodoMVC exposes its active-item counter through:
+
+```python
+todo_count = page.get_by_test_id("todo-count")
+```
+
+Verify its exact business value:
+
+```python
+expect(todo_count).to_have_text("1 item left")
+```
+
+The counter represents active tasks, not the total number of Todo items.
+
+## Filter navigation
+
+TodoMVC provides accessible filter links:
+
+```python
+active_filter = page.get_by_role(
+    "link",
+    name="Active",
+    exact=True,
+)
+
+completed_filter = page.get_by_role(
+    "link",
+    name="Completed",
+    exact=True,
+)
+```
+
+After clicking a filter, verify the client-side route:
+
+```python
+expect(page).to_have_url(
+    re.compile(r".*#/active$")
+)
+```
+
+or:
+
+```python
+expect(page).to_have_url(
+    re.compile(r".*#/completed$")
+)
+```
+
+## Live locator evaluation
+
+Playwright locators are evaluated when they are used.
+
+A locator created before an interface update can therefore represent the updated DOM afterward:
+
+```python
+todo_items = page.get_by_test_id("todo-item")
+
+active_filter.click()
+
+expect(todo_items).to_have_count(1)
+```
+
+The locator is not a frozen list of elements.
+
+## Hidden versus absent elements
+
+Verify that an element is not visible:
+
+```python
+expect(locator).to_be_hidden()
+```
+
+This can pass when the element is either hidden or absent.
+
+Verify that no matching element exists:
+
+```python
+expect(locator).to_have_count(0)
+```
+
+Use `to_have_count(0)` when the requirement specifically expects an element to be removed from the filtered collection or DOM.
+
+## Verifying targeted deletion
+
+A deletion test should verify both sides of the behavior:
+
+```text
+Expected item     → removed
+Protected item    → still present
+Business counter  → updated
+```
+
+Example assertions:
+
+```python
+expect(todo_items).to_have_count(1)
+expect(todo_to_keep).to_be_visible()
+expect(todo_to_remove).to_have_count(0)
+expect(todo_count).to_have_text("1 item left")
+```
+
+This prevents a test from passing when an action accidentally removes too much data.
+
+## Key takeaway
+
+UI automation should validate coherent business state rather than isolated clicks. Each assertion must target the page, element, control, or collection that actually owns the expected state.
